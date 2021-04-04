@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="org.ict.mapper.SignMapper">
+
+	<!-- 문서결재 start -->
+
+	<select id = "signStateListA" resultType="org.ict.domain.BoardVO">
+	
+			SELECT bno, btitle, mname, bcontent, bwrite_date, bsigner, signstate, bsign_date, deptname
+			FROM board a
+			JOIN member b ON b.mno = a.mno
+            JOIN dept c ON b.deptno = c.deptno
+			WHERE signstate > 0
+			ORDER BY bno DESC        
+         	limit #{pageStart}, #{number}
+ 	</select>
+ 	
+	<select id = "signStateListB" resultType="org.ict.domain.BoardVO">
+
+			SELECT bno, btitle, mname, bcontent, bwrite_date, bsigner, signstate, bsign_date, deptname
+			FROM board a
+			JOIN member b ON b.mno = a.mno
+            JOIN dept c ON b.deptno = c.deptno
+			WHERE signstate = 0
+			ORDER BY bno DESC
+			limit #{pageStart}, #{number}
+			
+	</select>
+	
+	
+	
+	<select id = "reportRead" resultType="org.ict.domain.BoardVO">
+		
+		select c.bno, c.btitle, a.mname, c.bcontent
+			, c.bwrite_date, c.bsigner, c.signstate, c.bsign_date
+			from member a, form b, board c
+			where a.mno = c.mno and b.fno = c.fno and bno = #{bno}
+	</select>
+	
+	<insert id="reportWrite">
+		INSERT INTO board (fno, mno, btitle, bcontent, bwriter, bsigner )
+		VALUES (#{fno}, #{mno}, #{btitle}, #{bcontent}, #{bwriter}, #{bsigner});
+	</insert>
+	
+	<select id="countPageNum" resultType="int"><!-- 결재보류 countPage  -->
+		SELECT count(bno) from board 
+		where 
+		signstate > 0; 
+	</select>
+	
+	<select id="countPageNum0" resultType="int"><!-- 결재완료 countPage  -->
+		SELECT count(bno) from board 
+		where 
+		signstate = 0; 
+	</select>
+	
+	<select id="deptSelect" resultType="org.ict.domain.DeptVO">
+		select deptname from dept;
+	</select>
+	
+	<!-- 문서결재 end -->
+	
+	<insert id="noticeWrite">
+		INSERT INTO notice (ntitle, ncontent, nwriter, mno, fno)
+		VALUES (#{ntitle},#{ncontent},#{nwriter}, #{mno}, #{fno});
+	</insert>
+	
+	<select id = "getNoticeList" resultType="org.ict.domain.NoticeVO">
+		SELECT nno, ntitle, nwrite_date, mname, deptname
+		FROM notice a
+		JOIN member b ON a.mno = b.mno
+		JOIN dept c ON b.deptno = c.deptno;
+			
+	</select>
+	
+	<select id = "getNoticeRead" resultType="org.ict.domain.NoticeVO">
+	
+		select nno, ntitle, nwriter, nwrite_date, ncontent
+		from notice
+		where nno = #{nno}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

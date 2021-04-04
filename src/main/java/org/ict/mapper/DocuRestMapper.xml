@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ict.mapper.DocuRestMapper">
+	
+	<select id="boardList" resultType="org.ict.domain.BoardVO">
+		SELECT c.bno, b.fname, c.btitle, a.mname, c.bwrite_date, c.bsigner,  c.bsign_date
+		FROM Member a, Form b, Board c
+		WHERE a.mno = c.mno and b.fno = c.fno
+		ORDER BY c.bno;
+	</select>
+	
+	<delete id="boardDelete">
+		DELETE FROM Board
+		WHERE bno = #{bno}
+	</delete>
+	
+	<select id="noticeList" resultType="org.ict.domain.NoticeVO">
+		SELECT c.nno, b.fname, c.ntitle, a.mname, c.nwrite_date
+		FROM Member a, Form b, Notice c
+		WHERE a.mno = c.mno and b.fno = c.fno
+		ORDER BY c.nno;
+	</select>
+	
+	<delete id="noticeDelete">
+		DELETE FROM Notice
+		WHERE nno = #{nno}
+	</delete>
+	
+</mapper>
