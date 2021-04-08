@@ -38,7 +38,7 @@ public class MydocuController {
 		return "/mymenu/mydocumodify";
 	}
 
-	@PostMapping("/modifyrun")
+	@PostMapping("/documodifyrun")
 	public String modify(BoardVO board, RedirectAttributes rttr) {
 		service.modify(board);
 

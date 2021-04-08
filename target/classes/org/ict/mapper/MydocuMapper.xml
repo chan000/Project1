@@ -25,8 +25,7 @@
 		UPDATE board
 			SET
 		btitle = #{btitle},
-		bcontent = #{bcontent},
-		bwrite_date = now()
+		bcontent = #{bcontent}
 			WHERE
 		bno = #{bno}
 	</update>

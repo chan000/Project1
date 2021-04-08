@@ -73,7 +73,7 @@
                 상세보기
               </header>
               <div class="panel-body" >
-                <form  class="form-horizontal " method="post" action="/mymenu/modifyrun">
+                <form  class="form-horizontal " method="post" action="/mymenu/documodifyrun">
                 <input type="hidden" name="bno" value="${board.bno }">
                   <!-- 추후 삭제 가능-->
                   <div class="row" style="height:130px">
@@ -113,18 +113,6 @@
                       <input type="text" class="form-control"  readonly="true" value="영업지원팀"><!-- deptno 작성예정 -->
                     </div>
                   </div>
-<!--                   <div class="form-group"> -->
-<!--                     <label class="col-sm-1 control-label"> 문서명</label> -->
-<!--                     <div class="col-sm-11"> -->
-<%--                       <input type="text" class="form-control" readonly="true" value="${board.fname}"> --%>
-<!--                     </div> -->
-<!--                   </div> -->
-<!--                   <div class="form-group"> -->
-<!--                     <label class="col-sm-1 control-label">작성자</label> -->
-<!--                     <div class="col-sm-11"> -->
-<%--                       <input class="form-control" id="focusedInput" type="text" readonly="true" value="${reportRead.mname}"> --%>
-<!--                     </div> -->
-<!--                   </div> -->
                   <div class="form-group">
                     <label class="col-sm-1 control-label">작성일</label>
                     <div class="col-sm-11">
@@ -140,7 +128,8 @@
                   <div class="form-group">
                     <label class="col-sm-1 control-label">내용</label>
                     <div class="col-sm-11">
-                      <textarea class="form-control"  cols="30" rows="10">${board.bcontent}
+                      <textarea class="form-control"  cols="30" rows="10">
+                      ${board.bcontent }
                       </textarea>
                     </div>
                   </div>
@@ -148,11 +137,9 @@
                   <div class="container">
                     <div class="row">
                       <div class="col-sm-8"></div>
-<%--                       <a class="btn btn-primary col-md-1" style="margin-right:5px; margin-left: 70px;" href="/sign/signStateList?page=${cri.page}" title="Bootstrap 3 themes generator">확인</a> --%>
-						<input type="hidden" name="bno" value="${board.bno }" />
+						<input type="hidden" name="bno" value="${board.bno }"/>
 						<input type="submit" value="제출"  class="btn btn-primary">
-<!--                       <a class="btn btn-primary col-md-1" style="margin-right:5px; margin-left: 150px;"  title="Bootstrap 3 themes generator">확인</a> -->
-                      <a class="btn btn-danger col-md-1"  title="Bootstrap 3 themes generator">취소</a>
+                      <a class="btn btn-danger "  title="Bootstrap 3 themes generator">취소</a>
                   </div>
                   </div>
                 </form>
