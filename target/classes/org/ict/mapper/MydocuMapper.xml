@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.ict.mapper.MydocuMapper">
+
+	<select id="docuList" resultType="org.ict.domain.BoardVO">
+		SELECT a.bno, b.fname,
+		a.btitle, a.bwrite_date, a.bsigner, a.bsign_date, a.signstate
+		FROM board a, form b
+		WHERE a.mno = #{mno} and a.fno = b.fno
+		ORDER BY a.signstate DESC, a.bno;
+	
+	</select>
+	
+	<select id="getList" resultType="org.ict.domain.BoardVO">
+	SELECT * FROM board WHERE bno > 0
+	</select>
+	<select id="read" resultType="org.ict.domain.BoardVO">
+	SELECT * FROM board WHERE bno = #{bno}
+	</select>
+	
+	<update id="update">
+		UPDATE board
+			SET
+		btitle = #{btitle},
+		bcontent = #{bcontent},
+		bwrite_date = now()
+			WHERE
+		bno = #{bno}
+	</update>
+	
+	<delete id="delete">
+	DELETE FROM board WHERE bno = #{bno}
+	</delete>
+	
+	
+	
+</mapper>

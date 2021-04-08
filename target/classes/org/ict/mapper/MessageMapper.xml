@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ict.mapper.MessageMapper">
+	
+	<select id="takeMessageList" resultType="org.ict.domain.MessageVO">
+		SELECT a.msgno, b.mname, a.msgtitle, a.msgcontent, a.readchk, a.senddate
+		FROM Message a, Member b
+		WHERE a.takemno = #{mno} and a.sendmno = b.mno and existtake = true
+	</select>
+	
+	<select id="sendMessageList" resultType="org.ict.domain.MessageVO">
+		SELECT a.msgno, b.mname, a.msgtitle, a.msgcontent, a.takechk, a.senddate
+		FROM Message a, Member b
+		WHERE a.sendmno = #{mno} and a.takemno = b.mno and existsend = true
+	</select>
+	
+	<select id="takeMno" resultType="org.ict.domain.MemberVO">
+		SELECT mno, mname
+		FROM Member
+		WHERE mno != #{mno}
+	</select>
+	
+	<insert id="sendMsg">
+		INSERT INTO Message (sendmno, takemno, msgtitle, msgcontent)
+		VALUES (#{sendmno}, #{takemno}, #{msgtitle}, #{msgcontent})
+	</insert>
+	
+	<update id="deleteTakeMsg">
+		UPDATE Message
+		SET existtake = false
+		WHERE msgno = #{msgno}
+	</update>
+	
+	<update id="deleteSendMsg">
+		UPDATE Message
+		SET existsend = false
+		WHERE msgno = #{msgno}
+	</update>
+	
+	<select id="getTakeMsg" resultType="org.ict.domain.MessageVO">
+		SELECT a.msgno, a.msgtitle, a.msgcontent, b.mname, a.senddate 
+		FROM Message a, Member b
+		WHERE msgno = #{msgno} and a.sendmno = b.mno
+	</select>
+	
+	<select id="getSendMsg" resultType="org.ict.domain.MessageVO">
+		SELECT a.msgno, a.msgtitle, a.msgcontent, b.mname, a.senddate 
+		FROM Message a, Member b
+		WHERE msgno = #{msgno} and a.takemno = b.mno
+	</select>
+</mapper>
