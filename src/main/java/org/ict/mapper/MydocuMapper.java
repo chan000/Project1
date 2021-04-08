@@ -18,5 +18,9 @@ public interface MydocuMapper {
 
 
 	public boolean delete(Long bno);
+	
+	public List<BoardVO> listPage(SearchCriteria cri);
+	
+	public int countPageNum(SearchCriteria cri);
 
 }

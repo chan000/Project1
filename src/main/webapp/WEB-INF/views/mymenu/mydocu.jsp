@@ -91,32 +91,31 @@
                   
                 </tbody>
          </table>
-		<div class="text-center">
-			<ul class="pagination justify-content-center" style="text-align : center">
-				<!-- 이전 페이지 버튼 -->
-				<c:if test="${pageMaker.prev }">
-					<li class="page-item"><a class="page-link"
-						href="/mymenu/mydocu?page=${pageMaker.startPage -1 }&searchType=${cri.searchType}">
-							&laquo; </a></li>
-				</c:if>
-				<!-- 페이지 번호 버튼 -->
-				<c:forEach begin="${pageMaker.startPage }"
-					end="${pageMaker.endPage }" var="idx">
-					<li
-						class="page-item
-		<c:out value="${pageMaker.cri.page == idx ? 'active' : '' }" />">
-						<a class="page-link"
-						href="/mymenu/mydocu?page=${idx }&searchType=${cri.searchType}">${idx }</a>
-					</li>
-				</c:forEach>
-				<!-- 다음 페이지 버튼 -->
-				<c:if test="${pageMaker.next && pageMaker.endPage >0 }">
-					<li class="page-item"><a class="page-link"
-						href="/mymenu/mydocu?page=${pageMaker.endPage +1 }&searchType=${cri.searchType}">
-							&raquo; </a></li>
-				</c:if>
-			</ul>
-		</div>
+		 <div class="text-center">
+        <ul class="pagination justify-content-center" style="text-align : center">
+        <c:if test="${pageMaker.prev}">
+          <li class="page-item disabled">
+          	<a class="page-link" href="/mymenu/mydocu?page=${pageMaker.startPage -1}">
+          		&laquo;
+          	</a>
+          </li>
+        </c:if>
+        <c:forEach begin="${pageMaker.startPage}"
+        			end ="${pageMaker.endPage}"
+        			var ="idx">
+        	<li class="page-item
+        		<c:out value="${pageMaker.cri.page == idx ? 'active' : ''}" />">
+        			<a class="page-link" href="/mymenu/mydocu?page=${idx}">${idx}</a></li>			
+        </c:forEach>
+          <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+          <li class="page-item">
+          	<a class="page-link" href="/mymenu/mydocu?page=${pageMaker.endPage +1}">
+          		&raquo;
+          	</a>
+          </li>
+          </c:if>
+        </ul>
+              </div>
 	</section>
             
           </div>

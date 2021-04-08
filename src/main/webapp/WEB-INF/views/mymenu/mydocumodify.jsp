@@ -104,7 +104,7 @@
                     <label class="col-sm-1 control-label">제목</label>
                   
                     <div class="col-sm-11 ">
-                      <input type="text" class="form-control"   value="${board.btitle}">
+                      <input type="text" class="form-control" name="btitle"  value="${board.btitle}">
                     </div>
                   </div>
                   <div class="form-group">
@@ -128,7 +128,7 @@
                   <div class="form-group">
                     <label class="col-sm-1 control-label">내용</label>
                     <div class="col-sm-11">
-                      <textarea class="form-control"  cols="30" rows="10">
+                      <textarea class="form-control"  name="bcontent" cols="30" rows="10">
                       ${board.bcontent }
                       </textarea>
                     </div>
@@ -139,7 +139,7 @@
                       <div class="col-sm-8"></div>
 						<input type="hidden" name="bno" value="${board.bno }"/>
 						<input type="submit" value="제출"  class="btn btn-primary">
-                      <a class="btn btn-danger "  title="Bootstrap 3 themes generator">취소</a>
+                      <a class="btn btn-danger"  href="/mymenu/mydocuread?bno=${board.bno  }" title="Bootstrap 3 themes generator">취소</a>
                   </div>
                   </div>
                 </form>

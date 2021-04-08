@@ -3,6 +3,7 @@ package org.ict.service;
 import java.util.List;
 
 import org.ict.domain.BoardVO;
+import org.ict.domain.SearchCriteria;
 import org.ict.mapper.MydocuMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,16 @@ public class MydocuServiceImpl implements MydocuService {
 	@Override
 	public boolean remove(Long bno) {
 		return mapper.delete(bno);
+	}
+
+	@Override
+	public List<BoardVO> getListPage(SearchCriteria cri) {
+		return mapper.listPage(cri);
+	}
+
+	@Override
+	public int getCountPage(SearchCriteria cri) {
+		return mapper.countPageNum(cri);
 	}
 
 
