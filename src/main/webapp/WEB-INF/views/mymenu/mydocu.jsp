@@ -91,31 +91,38 @@
                   
                 </tbody>
          </table>
-		 <div class="text-center">
-        <ul class="pagination justify-content-center" style="text-align : center">
-        <c:if test="${pageMaker.prev}">
-          <li class="page-item disabled">
-          	<a class="page-link" href="/mymenu/mydocu?page=${pageMaker.startPage -1}">
-          		&laquo;
-          	</a>
-          </li>
-        </c:if>
-        <c:forEach begin="${pageMaker.startPage}"
-        			end ="${pageMaker.endPage}"
-        			var ="idx">
-        	<li class="page-item
-        		<c:out value="${pageMaker.cri.page == idx ? 'active' : ''}" />">
-        			<a class="page-link" href="/mymenu/mydocu?page=${idx}">${idx}</a></li>			
-        </c:forEach>
-          <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-          <li class="page-item">
-          	<a class="page-link" href="/mymenu/mydocu?page=${pageMaker.endPage +1}">
-          		&raquo;
-          	</a>
-          </li>
-          </c:if>
-        </ul>
-              </div>
+         <div class="row text-center">
+         <select name="searchType" class="text-center">
+  				<option value="t"
+  				<c:out value="${cri.searchType eq 't' ? 'selected' : '' }" />>	
+  				제목
+  				</option>
+  				<option value="c"
+  				<c:out value="${cri.searchType eq 'c' ? 'selected' : '' }" />>	
+  				본문
+  				</option>
+  			</select>
+  			
+  			<input type="text"
+  					name="keyword"
+  					id="keywordInput"
+  					value="${cri.keyword }">
+  			<button class="btn btn-default" id="searchBtn">검 색</button>
+         </div>
+  			<div class="row text-center">
+                  <ul class="pagination">
+                    <c:if test="${pageMaker.prev}">
+                    	<li><a href="/mymenu/mydocu?page=${pageMaker.startPage - 1}&searchType=${cri.searchType}&keyword=${cri.keyword}">«</a></li>
+                    </c:if>
+                    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="index">
+                    	<li class="<c:out value="${pageMaker.cri.page == index ? 'active' : '' }" />" >
+                    		<a href="/mymenu/mydocu?page=${index}&searchType=${cri.searchType}&keyword=${cri.keyword}">${index}</a></li>
+                    </c:forEach>
+                    <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                    	<li><a href="/mymenu/mydocu?page=${pageMaker.endPage + 1}&searchType=${cri.searchType}&keyword=${cri.keyword}">»</a></li>
+                    </c:if>
+                  </ul>
+  			</div>
 	</section>
             
           </div>
@@ -227,8 +234,25 @@ $(document).ready(function() {
 	} // docuList
 	getdocuList();
 });// document
-		
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
 	
-</script>   
+	var bno = "${board.bno}";;
+	
+	console.log(bno);
+	if(bno !== ''){
+		alert(bno + "번 글이 삭제되었습니다.");
+	}
+	
+	$('#searchBtn').on("click", function(event){
+		self.location = "mydocu"
+			+ "?page=1"
+			+ "&searchType="
+			+ $("select option:selected").val()
+			+ "&keyword=" + $("#keywordInput").val();
+	});
+});
+</script>
 </body>
 </html>

@@ -35,8 +35,8 @@ public class MydocuController {
 
 	@GetMapping("/mydocuread")
 	public String docuread(Model model, Long bno, SearchCriteria cri) {
-		model.addAttribute("board", service.get(bno));
 		model.addAttribute("cri", cri);
+		model.addAttribute("board", service.get(bno));
 		return "/mymenu/mydocuread";
 	}
 

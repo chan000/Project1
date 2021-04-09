@@ -75,6 +75,10 @@
               <div class="panel-body" >
                 <form  class="form-horizontal" >
                 <input type="hidden" name="bno" value="${board.bno }">
+                <input type="hidden" name="searchType" value=${cri.searchType } />
+				<input type="hidden" name="keyword" value=${cri.keyword } />					   
+				<input type="hidden" name="page" value="${cri.page }">
+                
                   <!-- 추후 삭제 가능-->
                   <div class="row" style="height:130px">
                     
@@ -149,7 +153,7 @@
                   <div class="container">
                     <div class="row">
                       <div class="col-sm-8"></div>
-                      <a class="btn btn-primary col-md-1" style="margin-right:5px; margin-left: 70px;" href="/mymenu/mydocu?page=${cri.page}&searchType=${cri.searchType}" title="Bootstrap 3 themes generator">목록</a>
+                      <a class="btn btn-primary col-md-1" style="margin-right:5px; margin-left: 70px;" href="/mymenu/mydocu?page=${cri.page }&searchType=${cri.searchType}&keyword=${cri.keyword}" title="Bootstrap 3 themes generator">목록</a>
                       <a class="btn btn-warning col-md-1 useboard" type="submit" style="margin-right:5px;" title="Bootstrap 3 themes generator" data-oper="modify">수정</a>
                       <a class="btn btn-danger col-md-1 useboard" type="submit" data-oper="remove" title="Bootstrap 3 themes generator">삭제</a>
                   </div>

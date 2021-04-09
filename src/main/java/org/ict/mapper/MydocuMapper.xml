@@ -8,32 +8,69 @@
 	<select id="docuList" resultType="org.ict.domain.BoardVO">
 		SELECT a.bno, b.fname,
 		a.btitle, a.bwrite_date, a.bsigner, a.bsign_date, a.signstate
-		FROM board a, form b
+		FROM
+		board a, form b
 		WHERE a.mno = #{mno} and a.fno = b.fno
-		ORDER BY a.signstate DESC, a.bno;
-	
+		ORDER BY
+		a.signstate DESC, a.bno;
+
 	</select>
-	
+
 	<select id="getList" resultType="org.ict.domain.BoardVO">
-	SELECT * FROM board WHERE bno > 0
+		SELECT * FROM board WHERE bno >
+		0
 	</select>
 	<select id="read" resultType="org.ict.domain.BoardVO">
-	SELECT * FROM board WHERE bno = #{bno}
+		SELECT * FROM board WHERE bno =
+		#{bno}
 	</select>
-	
+
 	<update id="update">
 		UPDATE board
-			SET
+		SET
 		btitle = #{btitle},
-		bcontent = #{bcontent}
-			WHERE
+		bcontent =
+		#{bcontent}
+		WHERE
 		bno = #{bno}
 	</update>
-	
+
 	<delete id="delete">
-	DELETE FROM board WHERE bno = #{bno}
+		DELETE FROM board WHERE bno = #{bno}
 	</delete>
-	
-	
-	
+
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				and btitle like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'c'.toString()">
+				and bcontent like CONCAT('%', #{keyword}, '%')
+			</if>
+		</if>
+	</sql>
+
+	<select id="listPage" resultType="org.ict.domain.BoardVO">
+		<![CDATA[
+			SELECT a.bno, b.fname, a.btitle, a.bwrite_date, a.bsigner, a.bsign_date, a.signstate
+			FROM board a, form b
+			WHERE a.mno = a.bno and a.fno = b.fno
+			ORDER BY a.signstate DESC, a.bno
+			limit #{pageStart}, #{number}
+		]]>
+<!-- 		<include refid="search"></include> -->
+			
+<!-- 		<![CDATA[				 -->
+<!-- 			ORDER BY a.bno DESC -->
+<!-- 			limit #{pageStart}, #{number} -->
+<!-- 		]]> -->
+	</select>
+
+	<select id="countPageNum" resultType="int">
+		<![CDATA[
+			SELECT COUNT(bno) FROM board  WHERE bno > 0
+		]]>
+		<include refid="search"></include>
+	</select>
+
 </mapper>
