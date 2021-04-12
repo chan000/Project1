@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <header class="header dark-bg">
       <div class="toggle-nav">
         <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"><i class="icon_menu"></i></div>
@@ -164,50 +166,49 @@
 <!--           </li> -->
           <!-- inbox notificatoin end -->
           <!-- alert notification start-->
-<!--           <li id="alert_notificatoin_bar" class="dropdown"> -->
-<!--             <a data-toggle="dropdown" class="dropdown-toggle" href="#"> -->
+          <c:if test="${!empty login}">
+          <c:if test="${login.position == '과장' || login.position == '부장' || login.position == '차장' }">
+          <li id="alert_notificatoin_bar" class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 
-<!--                             <i class="icon-bell-l"></i> -->
-<!--                             <span class="badge bg-important"></span> -->
-<!--                         </a> -->
-<!--             <ul class="dropdown-menu extended notification"> -->
-<!--               <div class="notify-arrow notify-arrow-blue"></div> -->
-<!--               <li> -->
-<!--                 <p class="blue">You have 4 new notifications</p> -->
-<!--               </li> -->
-<!--               <li> -->
-<!--                 <a href="#"> -->
-<!--                                     <span class="label label-primary"><i class="icon_profile"></i></span> -->
-<!--                                     Friend Request -->
-<!--                                     <span class="small italic pull-right">5 mins</span> -->
-<!--                                 </a> -->
-<!--               </li> -->
-<!--               <li> -->
-<!--                 <a href="#"> -->
-<!--                                     <span class="label label-warning"><i class="icon_pin"></i></span> -->
-<!--                                     John location. -->
-<!--                                     <span class="small italic pull-right">50 mins</span> -->
-<!--                                 </a> -->
-<!--               </li> -->
-<!--               <li> -->
-<!--                 <a href="#"> -->
-<!--                                     <span class="label label-danger"><i class="icon_book_alt"></i></span> -->
-<!--                                     Project 3 Completed. -->
-<!--                                     <span class="small italic pull-right">1 hr</span> -->
-<!--                                 </a> -->
-<!--               </li> -->
-<!--               <li> -->
-<!--                 <a href="#"> -->
-<!--                                     <span class="label label-success"><i class="icon_like"></i></span> -->
-<!--                                     Mick appreciated your work. -->
-<!--                                     <span class="small italic pull-right"> Today</span> -->
-<!--                                 </a> -->
-<!--               </li> -->
-<!--               <li> -->
-<!--                 <a href="#">See all notifications</a> -->
-<!--               </li> -->
-<!--             </ul> -->
-<!--           </li> -->
+                            <i class="icofont-livejournal"></i>
+                            <span class="badge bg-important" id="notSignBoard"></span>
+                        </a>
+            <ul class="dropdown-menu extended notification">
+              <li>
+                <p class="blue" id="newssign"></p>
+              </li>
+              <li>
+              <h3>
+                <a href="/sign/notSignList" id="newsBoard">
+              
+                                </a>
+              </h3>
+              </li>
+            </ul>
+          </li>
+          </c:if>
+          
+          <li id="alert_notificatoin_bar" class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+
+                            <i class="icofont-ui-messaging"></i>
+                            <span class="badge bg-important" id="notChkMsg"></span>
+                        </a>
+            <ul class="dropdown-menu extended notification">
+              <li>
+                <p class="blue" id="news"></p>
+              </li>
+              <li>
+              <h3>
+                <a href="/profile/messagebox" id="newsDetail">
+              
+                                </a>
+              </h3>
+              </li>
+            </ul>
+          </li>
+          </c:if>
           <!-- alert notification end-->
           <!-- user login dropdown start-->
           <li class="dropdown">
@@ -243,7 +244,10 @@
                 <a href="/profile/myinfo"><i class="icon_profile"></i> My Profile</a>
               </li>
               <li>
-                <a href="#"><i class="icofont-document-folder"></i> My Document</a>
+                <a href="/mymenu/mydocu?mno=${login.mno}"><i class="icofont-document-folder"></i> My Document</a>
+              </li>
+              <li>
+                <a href="/profile/messagebox"><i class="icofont-ui-messaging"></i>Message Box</a>
               </li>
               <li>
                 <a href="/login/logout"><i class="icofont-logout"></i> Log Out</a>
@@ -253,6 +257,46 @@
         </ul>
           <!-- user login dropdown end -->
         <!-- notificatoin dropdown end-->
+        
+        <script type="text/javascript">
+        $(document).ready(function() {
+        var mno = ${login.mno};
+	        function notReadMsg(){					
+		        $.getJSON("/message/alert/" + mno, function(data) {
+	       			if (data === 0) {
+	       				$("#news").html("새로운 쪽지가 없습니다.")
+	       				$("#notChkMsg").html("");
+	       				$("#newsDetail").html("쪽지함으로 이동")
+	       			} else {
+	       				$("#news").html("새로운 쪽지가 있습니다.")
+		       			$("#notChkMsg").html(data);
+	       				$("#newsDetail").html("읽지 않은" + data + "개의 쪽지가 있습니다.");
+	       			}
+	       			
+	       		})
+			}
+			notReadMsg();
+			
+			function notSignBoard(){					
+		        $.getJSON("/message/sign/" + mno, function(data) {
+	       			if (data === 0) {
+	       				$("#newssign").html("결재가 필요한 문서가 없습니다.")
+	       				$("#notSignBoard").html("");
+	       				$("#newsBoard").html("문서 결재로 이동")
+	       			} else {
+	       				$("#newssign").html("결재가 필요한 문서가 있습니다.")
+		       			$("#notSignBoard").html(data);
+	       				$("#newsBoard").html("결재가 필요한 " + data + "개의 문서가 있습니다.");
+	       			}
+	       			
+	       		})
+			}
+			notSignBoard();
+			
+		});
+		
+        </script>
+        
       </div>
     </header>
     <!--header end-->

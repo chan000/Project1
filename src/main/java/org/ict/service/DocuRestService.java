@@ -19,7 +19,13 @@ public interface DocuRestService {
 	
 	public void boardRemove(int bno);
 	
-	public List<NoticeVO> noticeList();
+	public List<NoticeVO> noticeListPage(Criteria cri);
+	
+	public int noticeCount();
+	
+	public List<NoticeVO> noticeListPageSearch(Criteria cri, SearchCriteria search);
+	
+	public int noticeCountSearch(SearchCriteria search);
 	
 	public void noticeRemove(int nno);
 	

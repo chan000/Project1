@@ -10,8 +10,8 @@
   <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
   <link rel="shortcut icon" href="/resources/img/favicon.png">
 
-  <title>Creative - Bootstrap Admin Template</title>
-
+  <title>SIGN ME</title>
+  <link rel="icon" type="image/png"  href="/resources/img/signmefavicon.png"/>
   <link rel="stylesheet" href="/resources/icofont/icofont.min.css">
   <!-- Bootstrap CSS -->
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">

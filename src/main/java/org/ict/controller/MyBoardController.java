@@ -15,18 +15,17 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
-@RequestMapping("/mymenu/*")
+@RequestMapping("/myboard/*")
 public class MyBoardController {
 
 	@Autowired
 	private MyMemberService member;
 
-	
-	
 	@RequestMapping("/list")
 	public String list(Model model, Long mno) {
 
 		model.addAttribute("list", member.getList());
+//		log.info("list");
 		return "/mymenu/list";
 
 	}
@@ -39,9 +38,32 @@ public class MyBoardController {
 		
 		return "/mymenu/mget";
 		
+//		log.info("mget");
 	}
 
-	
+//	@PostMapping("/modify")
+//	public String modify(Model model, Long mno) {
+//
+//		MemberVO board = member.get(mno);
+//		model.addAttribute("board", board);
+//		log.info("modify1");
+//
+//		return "/board/modify";
+//	}
+
+	@PostMapping("/modifyrun")
+	public String modify(MemberVO board,RedirectAttributes rttr,Model model) {
+		
+		member.modify(board);
+		
+//		rttr.addAttribute("board", member.modify(board));
+
+		log.info(board.getMno());
+
+		return "redirect:/board/mget?mno=" + board.getMno();
+//		return "redirect:/board/modifyrun";
+//		return "/board/mget";
+	}
 	
 
 }

@@ -10,7 +10,7 @@
   <link rel="shortcut icon" href="/resources/img/favicon.png">
 
   <title>SIGN ME</title>
-
+  <link rel="icon" type="image/png"  href="/resources/img/signmefavicon.png"/>
   <link rel="stylesheet" href="/resources/icofont/icofont.min.css">
   <!-- Bootstrap CSS -->
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -79,36 +79,36 @@
                   <input type="hidden" name="searchType" value="${cri.searchType}">
                   <input type="hidden" name="keyword" value="${cri.keyword}">
                     <div class="form-group">
-                      <label for="mname" class="control-label col-lg-1">이름 <span class="required">*</span></label>
+                      <label for="mname" class="control-label col-lg-1">이름</label>
                       <div class="col-lg-3">
                         <input class=" form-control" id="mname" name="mname" type="text" value="${detail.mname}" />
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="mpwd" class="control-label col-lg-1">비밀번호<span class="required">*</span></label>
+                      <label for="mpwd" class="control-label col-lg-1">비밀번호</label>
                       <div class="col-lg-3">
                         <input class=" form-control" id="mpwd" name="mpwd" type="password" />
                       </div>
-                      <label for="repwd" class="control-label col-lg-2 col-lg-offset-1">비밀번호 확인 <span class="required">*</span></label>
+                      <label for="repwd" class="control-label col-lg-2 col-lg-offset-1">비밀번호 확인</label>
                       <div class="col-lg-3">
                         <input class=" form-control" id="repwd" type="password" />
                       </div>  
                     </div>
                     <div class="form-group">
-                      <label for="memail" class="control-label col-lg-1">이메일 <span class="required">*</span></label>
+                      <label for="memail" class="control-label col-lg-1">이메일</label>
                       <div class="col-lg-6">
                         <input class="form-control" id="memail" name="memail" type="text" value="${detail.memail}" />
                       </div>
                     </div>
                     <div class="form-group ">
-                      <label for="hiredate" class="control-label col-lg-1">입사일 <span class="required"></span></label>
+                      <label for="hiredate" class="control-label col-lg-1">입사일</label>
                       <div class="col-lg-6">
                         <input class="form-control" id="hiredate" name="hiredate" type="date" value="${detail.hiredate}" />
                       </div>
                       <label class="control-label col-lg-3">미선택 시, 등록일로 입력됩니다.</label>
                     </div>
                     <div class="form-group ">
-                      <label for="deptname" class="control-label col-lg-1">부서<span class="required"></span></label>
+                      <label for="deptname" class="control-label col-lg-1">부서</label>
                       <div class="col-lg-2">
                       	<input type="hidden" id="hidememdeptno" data-deptno="${detail.deptno}">
                       	<select class="form-control" id="deptno" name="deptno">
@@ -117,7 +117,7 @@
                          </c:forEach>
                          </select>
                       </div>
-                      <label for="position" class="control-label col-lg-1 col-lg-offset-1">직위 <span class="required"></span></label>
+                      <label for="position" class="control-label col-lg-1 col-lg-offset-1">직위</label>
                       <div class="col-lg-2">
                         <select class="form-control" id="position" name="position">
                           <option value="부장" <c:out value="${detail.position eq '부장' ? 'selected' : '' }"/>>부장</option>
@@ -129,39 +129,39 @@
                       </div>
                     </div>
                     <div class="form-group ">
-                      <label for="mpnum" class="control-label col-lg-1">연락처 <span class="required">*</span></label>
+                      <label for="mpnum" class="control-label col-lg-1">연락처</label>
                       <div class="col-lg-6">
                         <input class="form-control" id="mpnum" name="mpnum" type="text" value="${detail.mpnum}" />
                       </div>
                     </div>
                     <div class="form-group ">
-                      <label for="maddress" class="control-label col-lg-1">주소 <span class="required">*</span></label>
+                      <label for="maddress" class="control-label col-lg-1">주소</label>
                       <div class="col-lg-6">
                         <input class="form-control" id="maddress" name="maddress" type="text" value="${detail.maddress}" />
                       </div>
                     </div>
                     <div class="form-group ">
-                      <label for="mbirth" class="control-label col-lg-1">생년월일 <span class="required"></span></label>
+                      <label for="mbirth" class="control-label col-lg-1">생년월일</label>
                       <div class="col-lg-6">
                         <input class="form-control" id="mbirth" name="mbirth" type="date" value="${detail.mbirth}" />
                       </div>
                     </div>
                     <div class="form-group ">
-                      <label for="gender" class="control-label col-lg-1">성별<span class="required"></span></label>
+                      <label for="gender" class="control-label col-lg-1">성별</label>
                       <div class="col-lg-2">
                         <select class="form-control" id="gender" name="gender">
                           <option value="1" <c:out value="${detail.gender eq 1 ? 'selected' : '' }"/>>남자</option>
                           <option value="2" <c:out value="${detail.gender eq 2 ? 'selected' : '' }"/>>여자</option>
                         </select>
                       </div>
-                      <label for="military" class="control-label col-lg-1 col-lg-offset-1">병역여부<span class="required"></span></label>
+                      <label for="military" class="control-label col-lg-1 col-lg-offset-1">병역여부</label>
                       <div class="col-lg-2">
                         <select class="form-control" id="military" name="military">
                           <option value="1" <c:out value="${detail.military eq 1 ? 'selected' : '' }"/>>군필</option>
                           <option value="2" <c:out value="${detail.military eq 2 ? 'selected' : '' }"/>>미필</option>
                         </select>
                       </div>
-                      <label for="marry" class="control-label col-lg-1 col-lg-offset-1">혼인여부<span class="required"></span></label>
+                      <label for="marry" class="control-label col-lg-1 col-lg-offset-1">혼인여부</label>
                       <div class="col-lg-2">
                         <select class="form-control" id="marry" name="marry">
                           <option value="1" <c:out value="${detail.marry eq 1 ? 'selected' : '' }"/>>기혼</option>
@@ -170,20 +170,20 @@
                       </div>
                     </div>
                     <div class="form-group ">
-                      <label for="vacachk" class="control-label col-lg-1">휴가여부<span class="required"></span></label>
+                      <label for="vacachk" class="control-label col-lg-1">휴가여부</label>
                       <div class="col-lg-2">
                         <select class="form-control" id="vacachk" name="vacachk" data-vacachk="${detail.vacachk}">
                           <option value="1" <c:out value="${detail.vacachk eq 1 ? 'selected' : '' }"/>>근무중</option>
                           <option value="2" <c:out value="${detail.vacachk eq 2 ? 'selected' : '' }"/>>휴가중</option>
                         </select>
                       </div>
-                      <label for="vacarem" class="control-label col-lg-1 col-lg-offset-1">휴가일수<span class="required">*</span></label>
+                      <label for="vacarem" class="control-label col-lg-1 col-lg-offset-1">휴가일수</label>
                       <div class="col-lg-2">
                         <input class="form-control" id="vacarem" name="vacarem" type="text" value="${detail.vacarem}"/>
                       </div>
                     </div>
                     <div class="form-group row">
-                        <button class="btn btn-primary btn-lg col-lg-1 col-lg-offset-4" type="submit"><i class="icofont-check-circled"></i></button>
+                        <button class="btn btn-primary btn-lg col-lg-1 col-lg-offset-4" id="submitbtn" type="submit"><i class="icofont-check-circled"></i></button>
                         <a href="/manage/perdetail?mno=${detail.mno}" class="btn btn-default btn-lg col-lg-1 col-lg-offset-1" type="button"><i class="icofont-close-circled"></i></a>
                     </div>
                   </form>
@@ -306,6 +306,20 @@
     	
     	$('#deptno').val(deptno).prop("selected", true);
 	});
+    
+    var formObj = $("form");
+	
+	$("#submitbtn").on("click", function(e) {
+		e.preventDefault();
+		
+		if (mpwd != $("#repwd").val()){
+			alert("비밀번호가 일치하지 않습니다!");
+			$("#repwd").focus();
+			return;
+		} else {
+			formObj.submit();
+		}
+	})
     </script>
 
 </body>

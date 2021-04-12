@@ -11,7 +11,7 @@
   <link rel="shortcut icon" href="/resources/img/favicon.png">
 
   <title>SIGN ME</title>
-
+  <link rel="icon" type="image/png"  href="/resources/img/signmefavicon.png"/>
   <link rel="stylesheet" href="/resources/icofont/icofont.min.css">
   <!-- Bootstrap CSS -->
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -56,12 +56,12 @@
       <section class="wrapper">
         <div class="row">
           <div class="col-lg-12">
-            <h3 class="page-header"><strong><i class="icofont-copy-invert"></i>양식 관리</strong></h3>
+            <h3 class="page-header"><strong><i class="icofont-tasks"></i>양식 관리</strong></h3>
             <ol class="breadcrumb">
               <li><i class="fa fa-home"></i><a href="/">메인</a></li>
               <li><i class="icofont-robot-face"></i><a href="/manage/">관리자 메뉴</a></li>
               <li><i class="icofont-folder-open"></i><a href="/manage/docu">문서 관리</a></li>
-              <li><i class="icofont-copy-invert"></i>양식 관리</li>
+              <li><i class="icofont-tasks"></i>양식 관리</li>
             </ol>
           </div>
         </div>
@@ -100,9 +100,9 @@
                   <div class="row">
                   	<br>
 					
-              			<input type="text" name="keyword" id="keywordInput" placeholder="양식명으로 검색" >
+              			<input type="text" name="keyword" id="keywordInput" placeholder="Search" >
               			
-              			<button class="btn btn-default" id="searchBtn">검 색</button>
+              			<button class="btn btn-default btn-lg" id="searchBtn"><i class="icofont-search-document"></i></button>
                   </div>
  						
               		</div>
@@ -429,20 +429,20 @@
 			$('#search').html(str);
 		}
 			
-			$("#search").on("click", "li a", function(e) {
-				e.preventDefault();
-				
-				formPage = $(this).attr("href");
-				var keyword = $("#keywordInput").val();
-				getFormListSearch(formPage, keyword);
-			});
+		$("#search").on("click", "li a", function(e) {
+			e.preventDefault();
 			
-			$("#searchBtn").on("click", function() {
-				var keyword = $("#keywordInput").val();
-				
-				getFormListSearch(1, keyword);
-				$("#basic").html("");
-			});
+			formPage = $(this).attr("href");
+			var keyword = $("#keywordInput").val();
+			getFormListSearch(formPage, keyword);
+		});
+		
+		$("#searchBtn").on("click", function() {
+			var keyword = $("#keywordInput").val();
+			
+			getFormListSearch(1, keyword);
+			$("#basic").html("");
+		});
 		
 // 		$('#searchBtn').on("click", function(event) {
 // 			var keyword = $("#keywordInput").val();

@@ -10,7 +10,7 @@
   <link rel="shortcut icon" href="resources/img/favicon.png">
 
   <title>SIGN ME</title>
-
+  <link rel="icon" type="image/png"  href="/resources/img/signmefavicon.png"/>
   <link rel="stylesheet" href="/resources/icofont/icofont.min.css">
   <!-- Bootstrap CSS -->
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -57,7 +57,7 @@
         <!--overview start-->
         <div class="row">
           <div class="col-lg-12">
-            <h3 class="page-header"><strong><i class="icofont-copy-invert"></i>문서 관리</strong></h3>
+            <h3 class="page-header"><strong><i class="icofont-folder-open"></i>문서 관리</strong></h3>
             <ol class="breadcrumb">
               <li><i class="fa fa-home"></i><a href="/">메인</a></li>
               <li><i class="icofont-robot-face"></i><a href="/manage/">관리자 메뉴</a></li>

@@ -19,7 +19,20 @@
 		WHERE mno= #{mno}
 	</select>
 
-	
+	<update id="update">
+		UPDATE member
+		SET
+		mpwd = #{mpwd},
+		memail = #{memail},
+		mpnum = #{mpnum},
+		maddress = #{maddress},
+		mbirth = #{mbirth},
+		gender = #{gender},
+		marry = #{marry},
+		military = #{military}
+		WHERE
+		mno = #{mno}
+	</update>
 	<select id="memberread" resultType="org.ict.domain.MemberVO">
 		SELECT * FROM member WHERE
 		mno = #{mno}

@@ -28,7 +28,7 @@ public class DocuRestServiceImpl implements DocuRestService {
 	
 	@Override
 	public List<BoardVO> boardListPageSearch(Criteria cri, SearchCriteria search) {
-		return mapper.boardListPage(cri);
+		return mapper.boardListPageSearch(cri, search);
 	}
 	
 	@Override
@@ -42,13 +42,27 @@ public class DocuRestServiceImpl implements DocuRestService {
 	}
 
 	@Override
-	public List<NoticeVO> noticeList() {
-		return mapper.noticeList();
+	public List<NoticeVO> noticeListPage(Criteria cri) {
+		return mapper.noticeListPage(cri);
+	}
+
+	@Override
+	public int noticeCount() {
+		return mapper.noticeCount();
+	}
+
+	@Override
+	public List<NoticeVO> noticeListPageSearch(Criteria cri, SearchCriteria search) {
+		return mapper.noticeListPageSearch(cri, search);
+	}
+
+	@Override
+	public int noticeCountSearch(SearchCriteria search) {
+		return mapper.noticeCountSearch(search);
 	}
 
 	@Override
 	public void noticeRemove(int nno) {
 		mapper.noticeDelete(nno);
 	}
-
 }

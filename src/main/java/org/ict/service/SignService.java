@@ -7,27 +7,43 @@ import org.ict.domain.SearchCriteria;
 import org.ict.domain.BoardVO;
 import org.ict.domain.Criteria;
 import org.ict.domain.DeptVO;
+import org.ict.domain.FormVO;
+import org.ict.domain.MemberVO;
 
 public interface SignService {
 
-	public List<NoticeVO> getNoticeList();
-
-	public NoticeVO noticeRead(int bno);
-	
-	public void noticeWrite(NoticeVO board);
 	
 	public BoardVO reportRead(int bno);
 	
 	public void reportWrite(BoardVO board);
 	
-	public List<BoardVO> getListCriteriaA(Criteria cri);
+	public List<BoardVO> myWaitingList(SearchCriteria cri, int mno);
 	
-	public List<BoardVO>  getListCriteriaB(Criteria cri);
+	public List<BoardVO>  mySuccessList(SearchCriteria cri,  int mno);
 	
-	public int getcountPage(Criteria cri);
+	public int myWaitingCountPageNum (SearchCriteria cri, int mno);
 	
-	public int getcountPage0(Criteria cri);
+	public int mySuccessCountPageNum (SearchCriteria cri, int mno);
+	
+	public List<BoardVO> getListCriteriaA(SearchCriteria cri);
+	
+	public List<BoardVO>  getListCriteriaB(SearchCriteria cri);
+	
+	public int getcountPage(SearchCriteria cri);
+	
+	public int getcountPage0(SearchCriteria cri);
 	
 	public List<DeptVO> deptSelect();
+
+	public void signSucceess(BoardVO board);
+
+	public void reportModify(BoardVO board);
+
+	public BoardVO reportModifyForm(int bno);
+
+	public void reportDelete(int bno);
+	
+	public List<FormVO> getForm();
+
 	
 }

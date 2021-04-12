@@ -9,8 +9,8 @@
   <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
   <link rel="shortcut icon" href="/resources/img/favicon.png">
 
-  <title>Creative - Bootstrap Admin Template</title>
-
+  <title>SIGN ME</title>
+<link rel="icon" type="image/png"  href="/resources/img/signmefavicon.png"/>
   <link rel="stylesheet" href="/resources/icofont/icofont.min.css">
   <!-- Bootstrap CSS -->
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -58,11 +58,11 @@
       <section class="wrapper">
         <div class="row" style="width:1000px">
           <div class="col-lg-12">
-            <h1 class="text-primary"><i class="icofont-law-document"></i><Strong>보고서 작성</Strong></h1>
+            <h3 class="page-header"><Strong><i class="icofont-copy"></i>보고서 작성</Strong></h3>
             <ol class="breadcrumb">
-              <li><i class="fa fa-home"></i><a href="index.html">메인</a></li>
+              <li><i class="fa fa-home"></i><a href="/">메인</a></li>
               <li><i class="icon_document_alt"></i>문서 작성</li>
-              <li><i class="fa fa-file-text-o"></i>보고서 작성</li>
+              <li><i class="icofont-copy"></i>보고서 작성</li>
             </ol>
           </div>
         </div>
@@ -75,101 +75,47 @@
               <div class="panel-body" >
                 <form action="/sign/reportWrite" class="form-horizontal " method="post">
                   <!-- 추후 삭제 가능-->
-                  <div class="row" style="height:130px">
+                  
                     
-                    <div class="col-md-8">
-                    </div>
-                      
-                      <table style="border: 1px solid; width:300px" class="text-center">
-                        <tr style="border: 1px solid">
-                          <td><h4>과장 홍길동</h4></td>
-                          <td style="border :1px solid"><h4>과장 홍길동</h4></td>
-                        </tr>
-                        <tr >
-                          <td style="height:100px; border :1px solid"></td>
-                          <td style="height:100px"></td>
-                        </tr>
-                      </table>
-                    </div>
+                    
 
-                  <div class="form-group" style="margin-top:20px">
-                    <div class="col-sm-8">
-                      
-                    </div>
-                    <div class="col-sm-2" style="margin-left:20px; margin-right:-17px">
-                      <button class="btn btn-info" style="text" data-toggle="modal" data-target="#myModal">결재권자</button>
-                    </div>
-                    <div class="col-sm-1" style="padding-left:-200px">
-                      <button class="btn btn-info" data-toggle="modal" data-target="#myModal">결재권자</button>
-                    </div>
-                  </div>
-				<!-- the modal -->
-				 <div class="modal fade" id="myModal">
-				    <div class="modal-dialog">
-				      <div class="modal-content">
+                 
 				
-				        <!-- Modal Header -->
-				        <div class="modal-header">
-				          <h4 class="modal-title"><Strong>결재권자 선택</Strong></h4>
-				          
-				        </div>
-				        <!-- Modal body -->
-						
-				        <div class="modal-body">
-							<div class="dropdown dropright">
-								<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-									부서 선택
-								</button>
-									<div class="dropdown-menu">
-										<c:forEach items="${deptSelect}" var="dept">
-											<a class="dropdown-item" role="menuitem" tabindex="-1" href="#">
-												<input type="submit" name="seldpn" value="${dept.deptname}">
-											</a>	
-										</c:forEach>
-									</div>
-							</div><br><br>	
-							<div class="dropdown dropright">
-								<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-									이름
-								</button>
-								<div class="dropdown-menu">
-									
-									<a class="dropdown-item text-center" href="#">김개똥</a>
-									
-									
-								</div>
-							</div>
-				        </div>
-						
-				        <!-- Modal footer -->
-				        <div class="modal-footer">
-				          <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
-				          <button type="button" class="btn btn-primary">변경 사항 저장</button>
-				        </div>
-				
-				      </div>
-				    </div>
-				 </div>
-				 <!-- the modal end -->
 
                   <div class="form-group">
-                    <h1 class="text-center">보고서 작성</h1>
+                    <h2 class="text-center">보고서 작성</h2>
                     
                   </div>
-                
                   
+                  <div class="form-group">
+                    <label class="col-sm-1 control-label"> 양식</label>
+                    <div class="col-sm-11">
+                      <div class="dropdown">
+					      <button type="button" class="btn btn-outline-info" data-toggle="dropdown">
+					        문서 양식을 선택하세요.
+					      </button>
+					      <div class="dropdown-menu">
+					        <a class="dropdown-item" href="#">보고서</a>
+					        <a class="dropdown-item" href="/sign/applicationWrite">신청서</a>
+					      </div>
+					    </div>
+                    </div>
+                  </div>
+                  <input type="hidden" name="fno" value="1">
                   <div class="form-group">
                     <label class="col-sm-1 control-label"> 문서명</label>
                     <div class="col-sm-11">
-                      <input type="text" class="form-control" id="bno" name="bno" >
+                      <input type="text" class="form-control" id="btitle" name="btitle" >
                     </div>
                   </div>
+                  
                   <div class="form-group">
                     <label class="col-sm-1 control-label">작성자</label>
                     <div class="col-sm-11">
-                      <input class="form-control" id="mname" type="text" name="mname" > <!-- readonly 예정 -->
+                      <input class="form-control" id="mno" type="text" name="mname" value="${login.mname}" readonly> <!-- readonly 예정 -->
                     </div>
                   </div>
+                  <input type="hidden" name="mno" value="${login.mno}">
                   <div class="form-group">
                     <label class="col-sm-1 control-label">작성일</label>
                     <div class="col-sm-11">
@@ -183,7 +129,6 @@
                     </div>
                   </div>
                   <input type="hidden" id="fno" name="fno" value="1">
-                  <input type="hidden" id="mno" name="mno" value="1"> <!-- 로그인 정보에서 가져와 구현 예정 -->
                   <div class="form-group">
                     <label class="col-sm-1 control-label">내용</label>
                     <div class="col-sm-11">
@@ -248,19 +193,19 @@
   <script src="/resources/js/owl.carousel.js"></script>
   <!-- jQuery full calendar -->
   <script src="/resources/js/fullcalendar.min.js"></script>
-    <!-- Full Google Calendar - Calendar -->
+    Full Google Calendar - Calendar
     <script src="/resources/assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
-    <!--script for this page only-->
+    script for this page only
     <script src="/resources/js/calendar-custom.js"></script>
     <script src="/resources/js/jquery.rateit.min.js"></script>
-    <!-- custom select -->
+    custom select
     <script src="/resources/js/jquery.customSelect.min.js"></script>
     <script src="/resources/assets/chart-master/Chart.js"></script>
 	<!-- ck editor -->
 	<script src="//cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
-    <!--custome script for all page-->
+    custome script for all page
     <script src="/resources/js/scripts.js"></script>
-    <!-- custom script for this page-->
+    custom script for this page
     <script src="/resources/js/sparkline-chart.js"></script>
     <script src="/resources/js/easy-pie-chart.js"></script>
     <script src="/resources/js/jquery-jvectormap-1.2.2.min.js"></script>
@@ -327,6 +272,10 @@
     	    
 	      $("#bwrite_date").val(year + "-" + month + "-" + day);
       });
+	
+      
+     
+     
 
     </script>
 

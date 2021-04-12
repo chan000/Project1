@@ -14,7 +14,6 @@ public class MessageVO {
 	private String msgtitle;
 	private String msgcontent;
 	private Integer readchk;
-	private Integer takechk;
 	private Date senddate;
 	private boolean existtake;
 	private boolean existsend;

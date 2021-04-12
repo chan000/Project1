@@ -10,7 +10,7 @@
   <link rel="shortcut icon" href="/resources/img/favicon.png">
 
   <title>SIGN ME</title>
-
+  <link rel="icon" type="image/png"  href="/resources/img/signmefavicon.png"/>
   <link rel="stylesheet" href="/resources/icofont/icofont.min.css">
   <!-- Bootstrap CSS -->
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -183,7 +183,7 @@
 	                  		</c:choose> readonly/>
                       </div>
                       
-                      <label for="vacarem" class="control-label col-lg-1 col-lg-offset-1">휴가일수 <span class="required">*</span></label>
+                      <label for="vacarem" class="control-label col-lg-1 col-lg-offset-1">휴가일수</label>
                       <div class="col-lg-2">
                         <input class="form-control" id="vacarem" name="vacarem" type="text" value="${detail.vacarem}" readonly/>
                       </div>

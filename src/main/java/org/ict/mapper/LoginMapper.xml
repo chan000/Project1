@@ -19,10 +19,10 @@
 	</update>
 	
 	<select id="checkUserWithSessionKey" resultType="org.ict.domain.MemberVO">
-		SELECT mno, mname, mpwd, memail, hiredate, deptno, position, mpnum, maddress, mbirth, gender, military, marry, vacachk, vacarem, state, manager, sessionkey, sessionlimit
-		FROM Member
-		WHERE sessionkey = #{value}
-		  AND sessionlimit > now()
+		SELECT a.mno, a.mname, a.mpwd, a.memail, a.hiredate, a.deptno, b.deptname, a.position, a.mpnum, a.maddress, a.mbirth, a.gender, a.military, a.marry, a.vacachk, a.vacarem, a.state, a.manager, a.sessionkey, a.sessionlimit
+		FROM Member a, Dept b
+		WHERE a.sessionkey = #{value}
+		  AND a.sessionlimit > now() and a.deptno = b.deptno
 	</select>
 	
 </mapper>

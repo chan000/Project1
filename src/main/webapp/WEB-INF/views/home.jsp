@@ -10,7 +10,7 @@
   <link rel="shortcut icon" href="/resources/img/favicon.png">
 
   <title>SIGN ME</title>
-
+  <link rel="icon" type="image/png"  href="/resources/img/signmefavicon.png"/>
   <link rel="stylesheet" href="/resources/icofont/icofont.min.css">
   <!-- Bootstrap CSS -->
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -59,7 +59,7 @@
       	
       	<div class="row">
           <div class="col-lg-12">
-            <h3 class="page-header"><i class="icofont-login"></i>Log In</h3>
+            <h3 class="page-header"><strong><i class="icofont-login"></i>Log In</strong></h3>
           </div>
         </div>
       
@@ -101,16 +101,16 @@
         <!--overview start-->
         <div class="row">
           <div class="col-lg-12">
-            <h3 class="page-header"><i class="fa fa-home"></i>Main</h3>
+            <h3 class="page-header"><strong><i class="fa fa-home"></i>메인</strong></h3>
             <ol class="breadcrumb">
-              <li><i class="fa fa-home"></i>Main</li>
+              <li><i class="fa fa-home"></i>메인</li>
             </ol>
           </div>
         </div>
 
             <div class="col-sm-6">
               <section class="panel">
-                <header class="panel-heading">프로필</header>
+                <header class="panel-heading"><a href="/profile/myinfo">프로필</a></header>
               
               <table class="table table-striped table-bordered">
                 <tr>
@@ -136,7 +136,7 @@
                           <div class="col-sm-6">
           <section class="panel">
             <header class="panel-heading">
-              <a href="/board/general"> 공지사항</a>
+              <a href="/board/noticeList"> 공지사항</a>
             </header>
             <table class="table table-striped">
               <thead>
@@ -155,7 +155,7 @@
         <div class="col-sm-6">
           <section class="panel">
             <header class="panel-heading">
-              <a href="form_message.html">미결재 문서</a>
+              <a href="/mymenu/mydocu?mno=${login.mno }">미결재 문서</a>
             </header>
             <table class="table table-striped">
               <thead>

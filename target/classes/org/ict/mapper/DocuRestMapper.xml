@@ -8,7 +8,7 @@
 		SELECT c.bno, b.fname, c.btitle, a.mname, c.bwrite_date, c.bsigner, c.bsign_date
 		FROM Member a, Form b, Board c
 		WHERE a.mno = c.mno and b.fno = c.fno
-		ORDER BY c.bno DESC;
+		ORDER BY c.bno DESC
 		limit #{pageStart}, #{number}
 	</select>
 	
@@ -18,43 +18,46 @@
 	</select>
 	
 	<select id="boardListPageSearch" resultType="org.ict.domain.BoardVO">
-		<![CDATA[ SELECT c.bno, b.fname, c.btitle, a.mname, c.bwrite_date, c.bsigner, c.bsign_date
+		<![CDATA[ 
+		SELECT c.bno, b.fname, c.btitle, a.mname, c.bwrite_date, c.bsigner, c.bsign_date
 		FROM Member a, Form b, Board c
 		WHERE a.mno = c.mno and b.fno = c.fno
 		]]>
 		
-		<if test="search.searchType != null">
+			<if test="search.searchType != null">
 				<if test="search.searchType == 'f'.toString()">
-					and fname like CONCAT('%', #{search.keyword}, '%')
+					and b.fname like CONCAT('%', #{search.keyword}, '%')
 				</if>
 				<if test="search.searchType == 't'.toString()">
-					and btitle like CONCAT('%', #{search.keyword}, '%')
+					and c.btitle like CONCAT('%', #{search.keyword}, '%')
 				</if>
 				<if test="search.searchType == 'n'.toString()">
-					and mname like CONCAT('%', #{search.keyword}, '%')
+					and a.mname like CONCAT('%', #{search.keyword}, '%')
 				</if>
 			</if>
+			
 		<![CDATA[
-		ORDER BY c.bno DESC;
+		ORDER BY c.bno DESC
 		limit #{cri.pageStart}, #{cri.number}
 		]]>
 	</select>
 	
 	<select id="boardCountSearch" resultType="int">
 		SELECT count(bno)
-		FROM board
+		FROM Member a, Form b, Board c
+		WHERE a.mno = c.mno and b.fno = c.fno
 		
-		<if test="searchType != null">
+			<if test="searchType != null">
 				<if test="searchType == 'f'.toString()">
-					and fname like CONCAT('%', #{keyword}, '%')
+					and b.fname like CONCAT('%', #{keyword}, '%')
 				</if>
 				<if test="searchType == 't'.toString()">
-					and btitle like CONCAT('%', #{keyword}, '%')
+					and c.btitle like CONCAT('%', #{keyword}, '%')
 				</if>
 				<if test="searchType == 'n'.toString()">
-					and mname like CONCAT('%', #{keyword}, '%')
+					and a.mname like CONCAT('%', #{keyword}, '%')
 				</if>
-		</if>
+			</if>
 	</select>
 	
 	<delete id="boardDelete">
@@ -62,11 +65,57 @@
 		WHERE bno = #{bno}
 	</delete>
 	
-	<select id="noticeList" resultType="org.ict.domain.NoticeVO">
+	<select id="noticeListPage" resultType="org.ict.domain.NoticeVO">
 		SELECT c.nno, b.fname, c.ntitle, a.mname, c.nwrite_date
 		FROM Member a, Form b, Notice c
 		WHERE a.mno = c.mno and b.fno = c.fno
-		ORDER BY c.nno DESC;
+		ORDER BY c.nno DESC
+		limit #{pageStart}, #{number}
+	</select>
+	
+	<select id="noticeCount" resultType="int">
+		SELECT count(nno)
+		FROM Notice
+	</select>
+	
+	<select id="noticeListPageSearch" resultType="org.ict.domain.NoticeVO">
+		<![CDATA[
+		SELECT c.nno, b.fname, c.ntitle, a.mname, c.nwrite_date
+		FROM Member a, Form b, Notice c
+		WHERE a.mno = c.mno and b.fno = c.fno
+		]]>
+		<if test="search.searchType != null">
+			<if test="search.searchType == 'f'.toString()">
+				and b.fname like CONCAT('%', #{search.keyword}, '%')
+			</if>
+			<if test="search.searchType == 't'.toString()">
+				and c.ntitle like CONCAT('%', #{search.keyword}, '%')
+			</if>
+			<if test="search.searchType == 'n'.toString()">
+				and a.mname like CONCAT('%', #{search.keyword}, '%')
+			</if>
+		</if>
+		<![CDATA[
+		ORDER BY c.nno DESC
+		limit #{cri.pageStart}, #{cri.number}
+		]]>
+	</select>
+	
+	<select id="noticeCountSearch" resultType="int">
+		SELECT count(nno)
+		FROM Member a, Form b, Notice c
+		WHERE a.mno = c.mno and b.fno = c.fno
+		<if test="searchType != null">
+			<if test="searchType == 'f'.toString()">
+				and b.fname like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 't'.toString()">
+				and c.ntitle like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'n'.toString()">
+				and a.mname like CONCAT('%', #{keyword}, '%')
+			</if>
+		</if>
 	</select>
 	
 	<delete id="noticeDelete">

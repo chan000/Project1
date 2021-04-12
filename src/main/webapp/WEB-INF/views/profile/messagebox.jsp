@@ -10,7 +10,7 @@
   <link rel="shortcut icon" href="/resources/img/favicon.png">
 
   <title>SIGN ME</title>
-
+  <link rel="icon" type="image/png"  href="/resources/img/signmefavicon.png"/>
   <link rel="stylesheet" href="/resources/icofont/icofont.min.css">
   <!-- Bootstrap CSS -->
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -56,10 +56,10 @@
       <section class="wrapper">
         <div class="row">
           <div class="col-lg-12">
-            <h3 class="page-header"><strong><i class="icofont-search-document"></i>부서 관리</strong></h3>
+            <h3 class="page-header"><strong><i class="icofont-chat"></i>쪽지함</strong></h3>
             <ol class="breadcrumb">
               <li><i class="fa fa-home"></i><a href="/">메인</a></li>
-              <li><i class="icofont-search-document"></i>쪽지함</li>
+              <li><i class="icofont-chat"></i>쪽지함</li>
             </ol>
           </div>
         </div>
@@ -98,6 +98,37 @@
               	
               </tbody>
             </table>
+            <div class="container mt-3">
+              	<div class="row text-center">
+              	<br>
+              		<div class="btn-group" data-toggle="buttons">
+<%-- 					<label class="btn btn-default <c:out value="${cri.searchType eq 'n' ? 'active' : '' }"/>"> --%>
+<!--                                           <input type="radio" name="searchType" id="option1" value="n"  -->
+<%--                                           <c:out value="${cri.searchType eq 'n' ? 'checked' : '' }"/>> 선택 --%>
+<!--                                       </label> -->
+                     <label class="btn btn-default">
+                                          <input type="radio" name="searchTypeT" id="option1" value="n" > 이름
+                                      </label>
+                    <label class="btn btn-default">
+                                          <input type="radio" name="searchTypeT" id="option2" value="t" > 제목
+                                      </label>
+                  </div>
+              		
+                  <div class="row">
+                  	<br>
+					
+              			<input type="text" name="keyword" id="keywordInputT" placeholder="Search">
+              			
+              			<button class="btn btn-default btn-lg" id="searchBtnT"><i class="icofont-search-2"></i></button>
+                  </div>
+ 						
+              		</div>
+              	</div>
+              <div class="text-center">
+                  <ul id="takebasic" class="pagination">
+                  </ul>
+                  <ul id="takesearch" class="pagination"></ul>
+                </div>
           </section>
           </div>
           
@@ -130,6 +161,37 @@
               	
               </tbody>
             </table>
+            <div class="container mt-3">
+              	<div class="row text-center">
+              	<br>
+              		<div class="btn-group" data-toggle="buttons">
+<%-- 					<label class="btn btn-default <c:out value="${cri.searchType eq 'n' ? 'active' : '' }"/>"> --%>
+<!--                                           <input type="radio" name="searchType" id="option1" value="n"  -->
+<%--                                           <c:out value="${cri.searchType eq 'n' ? 'checked' : '' }"/>> 선택 --%>
+<!--                                       </label> -->
+                    <label class="btn btn-default">
+                                          <input type="radio" name="searchTypeS" id="option1" value="n" > 이름
+                                      </label>
+                    <label class="btn btn-default">
+                                          <input type="radio" name="searchTypeS" id="option2" value="t" > 제목
+                                      </label>
+                  </div>
+              		
+                  <div class="row">
+                  	<br>
+					
+              			<input type="text" name="keyword" id="keywordInputS" placeholder="Search">
+              			
+              			<button class="btn btn-default btn-lg" id="searchBtnS"><i class="icofont-search-2"></i></button>
+                  </div>
+ 						
+              		</div>
+              	</div>
+              <div class="text-center">
+                  <ul id="sendbasic" class="pagination">
+                  </ul>
+                  <ul id="sendsearch" class="pagination"></ul>
+                </div>
           </section>
           </div>
 
@@ -319,7 +381,6 @@
                         <button class="btn btn-danger btn-lg" id="deltakemsg" type="submit"><i class="icofont-eraser"></i></button>
                         <button class="btn btn-default closebtn btn-lg" type="button"><i class="icofont-exit"></i></button>
                       </div>
-                      </form>
                     </div>
                   </div>
                 </div>
@@ -341,7 +402,6 @@
                         <button class="btn btn-danger btn-lg" id="delsendmsg" type="submit"><i class="icofont-eraser"></i></button>
                         <button class="btn btn-default closebtn btn-lg" type="button"><i class="icofont-exit"></i></button>
                       </div>
-                      </form>
                     </div>
                   </div>
                 </div>
@@ -481,64 +541,356 @@
     
     <script type="text/javascript">
     $(document).ready(function() {
+    	function notReadMsg(){					
+	        $.getJSON("/message/alert/" + mno, function(data) {
+       			if (data === 0) {
+       				$("#news").html("새로운 소식이 없습니다.")
+       				$("#notChkMsg").html("");
+       				$("#newsDetail").html("쪽지함으로 이동")
+       			} else {
+       				$("#news").html("새로운 소식이 있습니다.")
+	       			$("#notChkMsg").html(data);
+       				$("#newsDetail").html("읽지 않은" + data + "개의 쪽지가 있습니다.");
+       			}
+       			
+       		});
+		}
+    	
+    	var temppage1 = "";
+    	var tempsearchType1 = "";
+    	var tempkeyword1 = "";
+    	var temppage2 = "";
+    	var tempsearchType2 = "";
+    	var tempkeyword2 = "";
 	   	
     	var mno = ${login.mno};
     	
-    	function getTakeList(){
-    		$.getJSON("/message/take/" + mno, function(data) {
-    			
-    			var str = "";
-    			
-    			$(data).each(function(){
-    				var timestamp = this.senddate;
-	    			var date = new Date(timestamp);
-	    			var formattedTime = date.getFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2);
-	    			var readchk = "";
-	    			
-	    			if(this.readchk == 0) {
-	    				readchk = "안읽음";	
-	    			} else if (this.readchk > 0) {
-	    				readchk = "읽음";
-	    			}
-	    			
-	    			
-	    			str += "<tr data-msgno='" + this.msgno + "' class='text-center mytakemsgno'>"
-    				+ "<td><input type='checkbox' name='takechkbox' value='" + this.msgno + "'></td>"
-    				+ "<td>" + this.mname + "</td><td><div data-msgno='" + this.msgno + "'>" + this.msgtitle + "</div></td><td>" + formattedTime + "</td><td>" + readchk + "</td>"
-    				+ "</tr>";
-    			})
-    			$("#takebody").html(str);
-    		})
-    	} // 받은 쪽지 리스트를 구하는 함수
-    	getTakeList();
+    	function getTakeList(page){
+    	    $.getJSON("/message/take/" + mno + "/" + page, function(data) {
+    		    var str = "";
+    		    
+    		    temppage1 = page;
+    	    	$(data.list).each(
+    	    		function() {
+    	    			var timestamp = this.senddate;
+    	    			var date = new Date(timestamp);
+    	    			var formattedTime = date.getFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2);
+    	    			var readchk = "";
+    	    			
+    	    			if(this.readchk == 0) {
+    	    				readchk = "안읽음";	
+    	    			} else if (this.readchk > 0) {
+    	    				readchk = "읽음";
+    	    			}
+    	    			
+    	    			
+    	    			str += "<tr data-msgno='" + this.msgno + "' class='text-center mytakemsgno'>"
+        				+ "<td><input type='checkbox' name='takechkbox' value='" + this.msgno + "'></td>"
+        				+ "<td>" + this.mname + "</td><td><div data-msgno='" + this.msgno + "'>" + this.msgtitle + "</div></td><td>" + formattedTime + "</td><td>" + readchk + "</td>"
+        				+ "</tr>";
+    	    		});
+    	    	$("#takebody").html(str);
+    	    	printPagingTake(data.pageMaker);
+    	    });
+    	} // getFormList
+    	getTakeList(1);
+
+    	function printPagingTake(pageMaker) {
+    		var str = "";
+    		
+    		if(pageMaker.prev) {
+    			str += "<li><a class='page-link' href='" + (pageMaker.startPage - 1) + "'> << </a></li>";
+    		}
+    		
+    		for (var i = pageMaker.startPage, len = pageMaker.endPage; i <= len; i++) {
+    			var active = pageMaker.cri.page == i ? 'active' : '';
+    			str += "<li class='" + active + "'><a href='" + i +"'>" + i + "</a></li>";
+    		}
+    		if(pageMaker.next) {
+    			str += "<li><a href='" + (pageMaker.endPage + 1) + "'> >> </a></li>";
+    		}
+    		
+    		$('#takebasic').html(str);
+    	}
+
+    	$("#takebasic").on("click", "li a", function(e) {
+    		e.preventDefault();
+    		
+    		formPage = $(this).attr("href");
+    		
+    		getTakeList(formPage);
+    	});
+
+    	function getTakeListSearch(page, searchType, keyword){
+    	    $.getJSON("/message/take/" + mno + "/" + page + "/" + searchType + "/" + keyword, function(data) {
+    		    var str = "";
+    		    temppage1 = data.pageMaker.cri.page;
+    		    console.log(data.pageMaker);
+    		    console.log(data.list);
+    		    tempsearchType1 = searchType;
+    		    tempkeyword1 = keyword;
+    	    	$(data.list).each(
+    	    		function() {
+    	    			var timestamp = this.senddate;
+    	    			var date = new Date(timestamp);
+    	    			var formattedTime = date.getFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2);
+    	    			var readchk = "";
+    	    			
+    	    			if(this.readchk == 0) {
+    	    				readchk = "안읽음";	
+    	    			} else if (this.readchk > 0) {
+    	    				readchk = "읽음";
+    	    			}
+    	    			
+    	    			
+    	    			str += "<tr data-msgno='" + this.msgno + "' class='text-center mytakemsgno'>"
+        				+ "<td><input type='checkbox' name='takechkbox' value='" + this.msgno + "'></td>"
+        				+ "<td>" + this.mname + "</td><td><div data-msgno='" + this.msgno + "'>" + this.msgtitle + "</div></td><td>" + formattedTime + "</td><td>" + readchk + "</td>"
+        				+ "</tr>";
+    	    		});
+    	    	$("#takebody").html(str);
+    	    	printPagingTakeSearch(data.pageMaker, searchType, keyword);
+    	    });
+    	} // getFormList
+
+    	function printPagingTakeSearch(pageMaker, searchType, keyword) {
+    		var str = "";
+    		
+    		if(pageMaker.prev) {
+    			str += "<li><a class='page-link' href='" + (pageMaker.startPage - 1) + "'> << </a></li>";
+    		}
+    		
+    		for (var i = pageMaker.startPage, len = pageMaker.endPage; i <= len; i++) {
+    			var active = pageMaker.cri.page == i ? 'active' : '';
+    			str += "<li class='" + active + "'><a href='" + i + "'>" + i + "</a></li>";
+    		}
+    		if(pageMaker.next) {
+    			str += "<li><a href='" + (pageMaker.endPage + 1) + "'> >> </a></li>";
+    		}
+    		
+    		$('#takesearch').html(str);
+    	}
     	
-    	function getSendList(){
-    		$.getJSON("/message/send/" + mno, function(data) {
+    	$("#takesearch").on("click", "li a", function(e) {
+			e.preventDefault();
+			
+			formPage = $(this).attr("href");
+			var keyword = $("#keywordInputT").val();
+			getTakeListSearch(formPage, searchType ,keyword);
+		});
+    	$("#searchBtnT").on("click", function() {
+    		keyword = $("#keywordInputT").val();
+			searchType = $('input[name="searchTypeT"]:checked').val();
+    		console.log(searchType);
+    		console.log(keyword);
+			
+		    
+			 if(keyword == "" || searchType == "undefined") {
+			    getTakeList(1);
+				$("#takesearch").html("");
+			 } else {
+				console.log("====================");
+				getTakeListSearch(1, searchType, keyword);
+				console.log("====================");
+				
+				$("#takebasic").html("");
+			 } 
+    		
+    	})
+    	
+    	function getSendList(page){
+    	    $.getJSON("/message/send/" + mno + "/" + page, function(data) {
+    		    var str = "";
+    		    
+    		    temppage2 = page;
+    	    	$(data.list).each(
+    	    		function() {
+    	    			var timestamp = this.senddate;
+    	    			var date = new Date(timestamp);
+    	    			var formattedTime = date.getFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2);
+    	    			var readchk = "";
+    	    			
+    	    			if(this.readchk == 0) {
+    	    				readchk = "안읽음";	
+    	    			} else if (this.readchk > 0) {
+    	    				readchk = "읽음";
+    	    			}
+    	    			
+    	    			
+    	    			str += "<tr data-msgno='" + this.msgno + "' class='text-center mysendmsgno'>"
+    					+ "<td><input type='checkbox' name='sendchkbox' value='" + this.msgno + "'></td>"
+    					+ "<td>" + this.mname + "</td><td><div data-msgno='" + this.msgno + "'>" + this.msgtitle + "</div></td><td>" + formattedTime + "</td><td>" + readchk + "</td>"
+    					+ "</tr>";
+    	    		});
+    	    	$("#sendbody").html(str);
+    	    	printPagingSend(data.pageMaker);
+    	    });
+    	} // getFormList
+    	getSendList(1);
+
+    	function printPagingSend(pageMaker) {
+    		var str = "";
+    		
+    		if(pageMaker.prev) {
+    			str += "<li><a class='page-link' href='" + (pageMaker.startPage - 1) + "'> << </a></li>";
+    		}
+    		
+    		for (var i = pageMaker.startPage, len = pageMaker.endPage; i <= len; i++) {
+    			var active = pageMaker.cri.page == i ? 'active' : '';
+    			str += "<li class='" + active + "'><a href='" + i +"'>" + i + "</a></li>";
+    		}
+    		if(pageMaker.next) {
+    			str += "<li><a href='" + (pageMaker.endPage + 1) + "'> >> </a></li>";
+    		}
+    		
+    		$('#sendbasic').html(str);
+    	}
+
+    	$("#sendbasic").on("click", "li a", function(e) {
+    		e.preventDefault();
+    		
+    		formPage = $(this).attr("href");
+    		
+    		getSendList(formPage);
+    	});
+
+    	function getSendListSearch(page, searchType, keyword){
+    	    $.getJSON("/message/send/" + mno + "/" + page + "/" + searchType + "/" + keyword, function(data) {
+    		    var str = "";
+    		    temppage2 = data.pageMaker.cri.page;
+    		    console.log(data.pageMaker);
+    		    console.log(data.list);
+    		    tempsearchType2 = searchType;
+    		    tempkeyword2 = keyword;
+    	    	$(data.list).each(
+    	    		function() {
+    	    			var timestamp = this.senddate;
+    	    			var date = new Date(timestamp);
+    	    			var formattedTime = date.getFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2);
+    	    			var readchk = "";
+    	    			
+    	    			if(this.readchk == 0) {
+    	    				readchk = "안읽음";	
+    	    			} else if (this.readchk > 0) {
+    	    				readchk = "읽음";
+    	    			}
+    	    			
+    	    			
+    	    			str += "<tr data-msgno='" + this.msgno + "' class='text-center mysendmsgno'>"
+    					+ "<td><input type='checkbox' name='sendchkbox' value='" + this.msgno + "'></td>"
+    					+ "<td>" + this.mname + "</td><td><div data-msgno='" + this.msgno + "'>" + this.msgtitle + "</div></td><td>" + formattedTime + "</td><td>" + readchk + "</td>"
+    					+ "</tr>";
+    	    		});
+    	    	$("#sendbody").html(str);
+    	    	printPagingSendSearch(data.pageMaker, searchType, keyword);
+    	    });
+    	} // getFormList
+
+    	function printPagingSendSearch(pageMaker, searchType, keyword) {
+    		var str = "";
+    		
+    		if(pageMaker.prev) {
+    			str += "<li><a class='page-link' href='" + (pageMaker.startPage - 1) + "'> << </a></li>";
+    		}
+    		
+    		for (var i = pageMaker.startPage, len = pageMaker.endPage; i <= len; i++) {
+    			var active = pageMaker.cri.page == i ? 'active' : '';
+    			str += "<li class='" + active + "'><a href='" + i + "'>" + i + "</a></li>";
+    		}
+    		if(pageMaker.next) {
+    			str += "<li><a href='" + (pageMaker.endPage + 1) + "'> >> </a></li>";
+    		}
+    		
+    		$('#sendsearch').html(str);
+    	}
+    	
+    	$("#sendsearch").on("click", "li a", function(e) {
+			e.preventDefault();
+			
+			formPage = $(this).attr("href");
+			var keyword = $("#keywordInputS").val();
+			var searchType = $('input[name="searchTypeS"]:checked').val();
+			getSendListSearch(formPage, searchType ,keyword);
+		});
+    	$("#searchBtnS").on("click", function() {
+    		var keyword = $("#keywordInputS").val();
+			var searchType = $('input[name="searchTypeS"]:checked').val();
+    		console.log(searchType);
+    		console.log(keyword);
+			
+		    
+			 if(keyword == "" || searchType == "undefined") {
+			    getSendList(1);
+				$("#sendsearch").html("");
+			 } else {
+				console.log("====================");
+				getSendListSearch(1, searchType, keyword);
+				console.log("====================");
+				
+				$("#sendbasic").html("");
+			 } 
+    		
+    	})
+    	
+    	
+//     	function getTakeList(){
+//     		$.getJSON("/message/take/" + mno, function(data) {
     			
-    			var str = "";
+//     			var str = "";
     			
-    			$(data).each(function(){
-    				var timestamp = this.senddate;
-	    			var date = new Date(timestamp);
-	    			var formattedTime = date.getFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2);
-	    			var takechk = "";
+//     			$(data).each(function(){
+//     				var timestamp = this.senddate;
+// 	    			var date = new Date(timestamp);
+// 	    			var formattedTime = date.getFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2);
+// 	    			var readchk = "";
 	    			
-	    			if(this.takechk == 0) {
-	    				takechk = "안읽음";	
-	    			} else if (this.takechk > 0) {
-	    				takechk = "읽음";
-	    			}
+// 	    			if(this.readchk == 0) {
+// 	    				readchk = "안읽음";	
+// 	    			} else if (this.readchk > 0) {
+// 	    				readchk = "읽음";
+// 	    			}
 	    			
 	    			
-	    			str += "<tr data-msgno='" + this.msgno + "' class='text-center mysendmsgno'>"
-    				+ "<td><input type='checkbox' name='sendchkbox' value='" + this.msgno + "'></td>"
-    				+ "<td>" + this.mname + "</td><td><div data-msgno='" + this.msgno + "'>" + this.msgtitle + "</div></td><td>" + formattedTime + "</td><td>" + takechk + "</td>"
-    				+ "</tr>";
-    			})
-    			$("#sendbody").html(str);
-    		})
-    	} // 보낸 쪽지 리스트를 구하는 함수
-    	getSendList();
+// 	    			str += "<tr data-msgno='" + this.msgno + "' class='text-center mytakemsgno'>"
+//     				+ "<td><input type='checkbox' name='takechkbox' value='" + this.msgno + "'></td>"
+//     				+ "<td>" + this.mname + "</td><td><div data-msgno='" + this.msgno + "'>" + this.msgtitle + "</div></td><td>" + formattedTime + "</td><td>" + readchk + "</td>"
+//     				+ "</tr>";
+//     			})
+//     			$("#takebody").html(str);
+//     		})
+//     	} // 받은 쪽지 리스트를 구하는 함수
+//     	getTakeList();
+
+
+    	
+//     	function getSendList(){
+//     		$.getJSON("/message/send/" + mno, function(data) {
+    			
+//     			var str = "";
+    			
+//     			$(data).each(function(){
+//     				var timestamp = this.senddate;
+// 	    			var date = new Date(timestamp);
+// 	    			var formattedTime = date.getFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2);
+// 	    			var readchk = "";
+	    			
+// 	    			if(this.readchk == 0) {
+// 	    				readchk = "안읽음";	
+// 	    			} else if (this.readchk > 0) {
+// 	    				readchk = "읽음";
+// 	    			}
+// 	    			console.log(this.readchk);
+	    			
+	    			
+// 	    			str += "<tr data-msgno='" + this.msgno + "' class='text-center mysendmsgno'>"
+//     				+ "<td><input type='checkbox' name='sendchkbox' value='" + this.msgno + "'></td>"
+//     				+ "<td>" + this.mname + "</td><td><div data-msgno='" + this.msgno + "'>" + this.msgtitle + "</div></td><td>" + formattedTime + "</td><td>" + readchk + "</td>"
+//     				+ "</tr>";
+//     			})
+//     			$("#sendbody").html(str);
+//     		})
+//     	} // 보낸 쪽지 리스트를 구하는 함수
+//     	getSendList();
     	
     	function takeMno(){
     		
@@ -593,14 +945,13 @@
 					    $("#sendmsgmodal").attr("aria-modal", "false");
 					    $("#sendmsgmodal").attr("aria-hidden", "true");
 					    $("#sendmsgmodal").modal("hide");
-					    getSendList();
+					    getSendList(temppage1);
 					}
 				}
 			});
 		}); // 쪽지 보내기 ajax
 		
 		$("#alltakechk").on("click", function(){
-			console.log(1);
 			if (this.checked) {
 				$("input[name='takechkbox']").attr("checked",true);
 			} else {
@@ -609,7 +960,6 @@
 		})
 		
 		$("#allsendchk").on("click", function(){
-			console.log(1);
 			if (this.checked) {
 				$("input[name='sendchkbox']").attr("checked",true);
 			} else {
@@ -627,13 +977,15 @@
 		    $("#delsendmsgmodal").modal("show");
 		}); // 보낸 쪽지 삭제 모달창
 		
-		$("#delsendmsg").on("click", function(e) {
+		$("#delsendmsg").on("click", function() {
 			
 			var sendmsglist = [];
 			$("input[name='sendchkbox']:checked").each(function(){
 				var temp = $(this).val();
 				sendmsglist.push(temp);
 			}); // 체크된 목록을 배열로 가져오기
+			
+			console.log(sendmsglist);
 			
 			if (sendmsglist.length == 0) {
 				alert("삭제할 쪽지를 선택해주세요.");
@@ -645,7 +997,6 @@
 			    $("#delsendmsgmodal").modal("hide");
 			} // 삭제할 쪽지가 없으면 알림창 띄우고 모달창 닫기
 			
-						
 			$.each(sendmsglist, function(index, value) {
 				$.ajax({
 					type : 'put',
@@ -661,19 +1012,76 @@
 					dataType : 'text',
 					success : function(result) {
 						if(result == 'SUCCESS' && value === sendmsglist[sendmsglist.length-1])
-						alert("보낸 쪽지가 삭제 되었습니다.");
+						alert("받은 쪽지가 삭제 되었습니다.");
+						notReadMsg();
 						$("body").attr("class", "");
 						$("#backdrop").remove();
 					    $("#delsendmsgmodal").attr("class", "modal fade");
 					    $("#delsendmsgmodal").attr("aria-modal", "false");
 					    $("#delsendmsgmodal").attr("aria-hidden", "true");
 					    $("#delsendmsgmodal").modal("hide");
-					    getSendList();
+					    if (temppage2 == "" || tempsearchType2 == "" || tempkeyword2 == ""){
+							getSendList(temppage2)
+							$("#sendsearch").html("");
+						} else {
+							getSendListSearch(temppage2, tempsearchType2, tempkeyword2);
+							$("#sendbasic").html("");
+						}
 					}
 				});
 			});
+			notReadMsg();
 			
-		}); // 보낸 쪽지 삭제 ajax
+		});
+		
+// 		$("#delsendmsg").on("click", function(e) {
+			
+// 			var sendmsglist = [];
+// 			$("input[name='sendchkbox']:checked").each(function(){
+// 				var temp = $(this).val();
+// 				sendmsglist.push(temp);
+// 			}); // 체크된 목록을 배열로 가져오기
+// 			console.log(sendmsglist);
+			
+// 			if (sendmsglist.length == 0) {
+// 				alert("삭제할 쪽지를 선택해주세요.");
+// 				$("body").attr("class", "");
+// 				$("#backdrop").remove();
+// 			    $("#delsendmsgmodal").attr("class", "modal fade");
+// 			    $("#delsendmsgmodal").attr("aria-modal", "false");
+// 			    $("#delsendmsgmodal").attr("aria-hidden", "true");
+// 			    $("#delsendmsgmodal").modal("hide");
+// 			} // 삭제할 쪽지가 없으면 알림창 띄우고 모달창 닫기
+			
+						
+// 			$.each(sendmsglist, function(index, value) {
+// 				$.ajax({
+// 					type : 'put',
+// 					url : '/message/remove/send/' + value,
+// 					header : {
+// 						"Content-Type" : "application/json",
+// 						"X-HTTP-Method-Override" : "PUT"
+// 					},
+// 					contentType : "application/json",
+// 					data : JSON.stringify({
+// 						msgno : value
+// 					}),
+// 					dataType : 'text',
+// 					success : function(result) {
+// 						if(result == 'SUCCESS' && value === sendmsglist[sendmsglist.length-1])
+// 						alert("보낸 쪽지가 삭제 되었습니다.");
+// 						$("body").attr("class", "");
+// 						$("#backdrop").remove();
+// 					    $("#delsendmsgmodal").attr("class", "modal fade");
+// 					    $("#delsendmsgmodal").attr("aria-modal", "false");
+// 					    $("#delsendmsgmodal").attr("aria-hidden", "true");
+// 					    $("#delsendmsgmodal").modal("hide");
+// 					    getSendList(1);
+// 					}
+// 				});
+// 			});
+			
+// 		}); // 보낸 쪽지 삭제 ajax
     	
     	$("#deltakemsgbtn").on("click", function() {
     		$("body").attr("class", "modal-open");
@@ -692,6 +1100,8 @@
 				var temp = $(this).val();
 				takemsglist.push(temp);
 			}); // 체크된 목록을 배열로 가져오기
+			
+			console.log(takemsglist);
 			
 			if (takemsglist.length == 0) {
 				alert("삭제할 쪽지를 선택해주세요.");
@@ -725,7 +1135,14 @@
 					    $("#deltakemsgmodal").attr("aria-modal", "false");
 					    $("#deltakemsgmodal").attr("aria-hidden", "true");
 					    $("#deltakemsgmodal").modal("hide");
-					    getTakeList();
+					    if (temppage1 == "" || tempsearchType1 == "" || tempkeyword1 == ""){
+							getTakeList(temppage1);
+							$("#takesearch").html("");
+						} else {
+							getTakeListSearch(temppage1, tempsearchType1, tempkeyword1);
+							$("#takebasic").html("");
+						}
+					    notReadMsg();
 					}
 				});
 			});
@@ -755,11 +1172,11 @@
 		    $("#detailtakemsgmodal").attr("aria-modal", "false");
 		    $("#detailtakemsgmodal").attr("aria-hidden", "true");
 		    $("#detailtakemsgmodal").modal("hide");
+		    notReadMsg();
+		    
 		}); // 모든 모달창 닫기 버튼의 기능을 수행하는 함수
 		
 		$("#sendbody").on("click", ".mysendmsgno td div", function() {
-			console.log(this);
-			
 			$("body").attr("class", "modal-open");
 		    $("body").append("<div id='backdrop' class='modal-backdrop fade show'>");
 		    $("#detailsendmsgmodal").attr("class", "modal fade show");
@@ -770,7 +1187,6 @@
 			
 			var msgno = $(this).data("msgno");
 			
-			console.log(msgno);
 			$.getJSON("/message/detail/send/" + msgno, function(data) {
 				var timestamp = data.senddate;
     			var date = new Date(timestamp);
@@ -781,12 +1197,16 @@
 				$("#takeperson").val(data.mname);
 				$("#detailsendcontent").val(data.msgcontent);
 				$("#detailsenddate").val(formattedTime);
+				
+				if (temppage2 == "" || tempsearchType2 == "" || tempkeyword2 == ""){
+					getSendList(temppage2)
+				} else {
+					getSendListSearch(temppage2, tempsearchType2, tempkeyword2);
+				}
 			})
 		})
 		
 		$("#takebody").on("click", ".mytakemsgno td div", function() {
-			console.log(this);
-			
 			$("body").attr("class", "modal-open");
 		    $("body").append("<div id='backdrop' class='modal-backdrop fade show'>");
 		    $("#detailtakemsgmodal").attr("class", "modal fade show");
@@ -797,7 +1217,6 @@
 			
 			var msgno = $(this).data("msgno");
 			
-			console.log(msgno);
 			$.getJSON("/message/detail/take/" + msgno, function(data) {
 				var timestamp = data.senddate;
     			var date = new Date(timestamp);
@@ -808,7 +1227,15 @@
 				$("#sendperson").val(data.mname);
 				$("#detailtakecontent").val(data.msgcontent);
 				$("#tdetailsenddate").val(formattedTime);
+				
+				if (temppage1 == "" || tempsearchType1 == "" || tempkeyword1 == ""){
+					getTakeList(temppage1)
+				} else {
+					getTakeListSearch(temppage1, tempsearchType1, tempkeyword1);
+				}
 			})
+			
+			
 		})
 			
 // 		$("#takebody").on("click", ".mytakemsgno td div", function() {
@@ -873,57 +1300,57 @@
 // 							+ "&deptoption="
 // 							+ $('input:radio[name=deptoption]').val();
 // 		})
+	
+	
 		
 		
-		
-		$("td").on("click", "div button", function() {
+// 		$("td").on("click", "div button", function() {
 			
-			var a = $(this).data("dno");
+// 			var a = $(this).data("dno");
 			
-			var info = $(this).parent();
+// 			var info = $(this).parent();
 			
-			var dno = info.attr("data-dno");
+// 			var dno = info.attr("data-dno");
 			
-			var deptname = info.attr("data-dname");
+// 			var deptname = info.attr("data-dname");
 			
-			console.log(deptname);
 			
-			if($(this).attr("id") == "mod" + a) {
+// 			if($(this).attr("id") == "mod" + a) {
 				
-				$("body").attr("class", "modal-open");
-			    $("body").append("<div id='backdrop' class='modal-backdrop fade show'>");
-			    $("#dnamemod").val(deptname);
-			    $("#hidemodify").val(a);
-			    $("#deptmodify").attr("class", "modal fade show");
-			    $("#deptmodify").attr("aria-modal", "true");
-			    $("#deptmodify").attr("aria-hidden", "false");
-			    $('#deptmodify').modal({backdrop: 'static'});
-			    $("#deptmodify").modal("show");
-			} else if ($(this).attr("id") == "del" + a) {
-				$("body").attr("class", "modal-open");
-			    $("body").append("<div id='backdrop' class='modal-backdrop fade show'>");
-			    $("#hideremove").val(a);
-			    $("#deptremove").attr("class", "modal fade show");
-			    $("#deptremove").attr("aria-modal", "true");
-			    $("#deptremove").attr("aria-hidden", "false");
-			    $('#deptremove').modal({backdrop: 'static'});
-			    $("#deptremove").modal("show");
-			}
+// 				$("body").attr("class", "modal-open");
+// 			    $("body").append("<div id='backdrop' class='modal-backdrop fade show'>");
+// 			    $("#dnamemod").val(deptname);
+// 			    $("#hidemodify").val(a);
+// 			    $("#deptmodify").attr("class", "modal fade show");
+// 			    $("#deptmodify").attr("aria-modal", "true");
+// 			    $("#deptmodify").attr("aria-hidden", "false");
+// 			    $('#deptmodify').modal({backdrop: 'static'});
+// 			    $("#deptmodify").modal("show");
+// 			} else if ($(this).attr("id") == "del" + a) {
+// 				$("body").attr("class", "modal-open");
+// 			    $("body").append("<div id='backdrop' class='modal-backdrop fade show'>");
+// 			    $("#hideremove").val(a);
+// 			    $("#deptremove").attr("class", "modal fade show");
+// 			    $("#deptremove").attr("aria-modal", "true");
+// 			    $("#deptremove").attr("aria-hidden", "false");
+// 			    $('#deptremove').modal({backdrop: 'static'});
+// 			    $("#deptremove").modal("show");
+// 			}
 			
-		})
+// 		})
 		
 	    	
-		$("#deptregbtnok").on("click", function() {
-			alert("새로운 부서가 등록되었습니다.")
-		});
+// 		$("#deptregbtnok").on("click", function() {
+// 			alert("새로운 부서가 등록되었습니다.")
+// 		});
 		
-		$("#deptmodbtnok").on("click", function() {
-			alert("부서명이 수정 되었습니다.")
-		});
+// 		$("#deptmodbtnok").on("click", function() {
+// 			alert("부서명이 수정 되었습니다.")
+// 		});
 		
-		$("#deptdelbtnok").on("click", function() {
-			alert("부서가 삭제 되었습니다.")
-		});
+// 		$("#deptdelbtnok").on("click", function() {
+// 			alert("부서가 삭제 되었습니다.")
+// 		});
 	    
 	    
 	});

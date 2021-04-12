@@ -13,16 +13,27 @@
                       </a>
             <ul class="sub">
               <li><a class="" href="/profile/myinfo">내 정보</a></li>
-              <li><a class="" href="/mymenu/mydocu">내 문서 열람</a></li>
+              <li><a class="" href="/mymenu/mydocu?mno=${login.mno}">내 문서 열람</a></li>
               <li><a class="" href="/profile/messagebox">쪽지함</a></li>
             </ul>
           </li>
-          <li>
-            <a class="" href="/sign/signStateList">
-                        <i class="icofont-checked"></i>
+          <c:if test="${login.position == '부장' || login.position == '차장' || login.position == '과장'}">
+           <li>
+            <a class="" href="/sign/notSignList">
+                        <i class="icofont-livejournal"></i>
                           <span>문서 결재</span>
                       </a>
           </li>
+          </c:if>
+           <c:if test="${login.position == '사원' || login.position == '대리' || login.position == '인턴'}">
+           <li>
+            <a class="" href="/sign/documentWrite">
+                        <i class="icofont-letter"></i>
+                          <span>문서 작성</span>
+                      </a>
+          </li>
+          </c:if>
+          <c:if test="${login.position == '부장' || login.position == '차장' || login.position == '과장'}">
           <li class="sub-menu">
             <a href="javascript:;" class="">
                         <i class="icofont-letter"></i>
@@ -30,10 +41,12 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
             <ul class="sub">
-              <li><a class="" href="/sign/noticeWrite">공지사항</a></li>
-              <li><a class="" href="/sign/reportWrite">문서</a></li>
+              <li><a class="" href="/board/noticeWrite">공지사항</a></li>
+              <li><a class="" href="/sign/documentWrite">문서</a></li>
             </ul>
+            
           </li>
+          </c:if>
           <li class="sub-menu">
             <a href="javascript:;" class="">
                         <i class="icofont-page"></i>
@@ -41,8 +54,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
             <ul class="sub">
-              <li><a class="" href="/sign/noticeList">공지사항</a></li>
-              <li><a class="" href="buttons.html">문서 열람</a></li>
+              <li><a class="" href="/board/noticeList">공지사항</a></li>
+              <li><a class="" href="/sign/signSuccessList">문서 열람</a></li>
             </ul>
           </li>
           <c:if test="${login.manager}">

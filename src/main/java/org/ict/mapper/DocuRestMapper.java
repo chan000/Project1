@@ -20,7 +20,13 @@ public interface DocuRestMapper {
 	
 	public void boardDelete(int bno);
 	
-	public List<NoticeVO> noticeList();
+	public List<NoticeVO> noticeListPage(Criteria cri);
+	
+	public int noticeCount();
+	
+	public List<NoticeVO> noticeListPageSearch(@Param("cri") Criteria cri, @Param("search") SearchCriteria search);
+	
+	public int noticeCountSearch(SearchCriteria search);
 	
 	public void noticeDelete(int nno);
 	

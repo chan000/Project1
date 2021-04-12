@@ -9,8 +9,8 @@
   <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
   <link rel="shortcut icon" href="/resources/img/favicon.png">
 
-  <title>Creative - Bootstrap Admin Template</title>
-
+  <title>SIGN ME</title>
+<link rel="icon" type="image/png"  href="/resources/img/signmefavicon.png"/>
   <link rel="stylesheet" href="/resources/icofont/icofont.min.css">
   <!-- Bootstrap CSS -->
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -57,11 +57,10 @@
       <section class="wrapper">
         <div class="row">
           <div class="col-lg-12">
-            <h3 class="page-header"><Strong><i class="icofont-check-circled"></i>문서결재</Strong></h3>
+            <h3 class="page-header"><strong><i class="icofont-law-document"></i>문서결재</strong></h3>
             <ol class="breadcrumb">
               <li><i class="fa fa-home"></i><a href="index.html">메인</a></li>
-              <li><i class="icofont-check-circled"></i>결재상태</li>
-              <li><i class="fa fa-th-list"></i>Basic Table</li>
+              <li><i class="icofont-law-document"></i>문서결재</li>
             </ol>
           </div>
         </div>
@@ -70,8 +69,28 @@
           <div class="col-lg-12">
               
               <header class="panel-heading">
-                <h3>결재대기</h3>
+                <h2>결재대기</h2>
+                <!-- search start -->
+            	
+             		
+             		<div class="box-body">
+             			<select name="searchType">
+             				<option value="n" <c:out value="${cri.searchType == null ? 'selected' : ''}" />>-</option>
+             				<option value="t" <c:out value="${cri.searchType eq 't' ? 'selected' : ''}" />>제목</option>
+             				<option value="c" <c:out value="${cri.searchType eq 'c' ? 'selected' : ''}" />>내용</option>
+             				<option value="w" <c:out value="${cri.searchType eq 'w' ? 'selected' : ''}" />>작성자</option>
+             				<option value="tc" <c:out value="${cri.searchType eq 'tc' ? 'selected' : ''}" />>제목+내용</option>
+             				<option value="cw" <c:out value="${cri.searchType eq 'cw' ? 'selected' : ''}" />>내용+작성자</option>
+             				<option value="tcw" <c:out value="${cri.searchType eq 'tcw' ? 'selected' : ''}" />>제목+내용+작성자</option>
+             			</select>
+             			
+             			<input type="text" name="keyword" id="keywordInput" value="${cri.keyword}">
+             			<button id="searchBtn">Search</button>
+             		</div>
+             	
+             	<!-- search end -->
               </header>
+              
               <section class="panel">
               <table class="table table-striped table-advance table-hover">
                 
@@ -89,32 +108,35 @@
                  </thead>
                  <tbody>
                   <c:forEach items="${signStateListA}" var="list">
+                  <input type="hidden" name="mno" value="${list.mno}">
+                  <c:if test="${list.mno == login.mno || login.position eq '과장' || login.position eq '부장' || login.position eq '차장'}">
                   <tr>
                     <td>${list.bno}</td>
                     <td>${list.deptname}</td>
-                    <td><a href="/sign/reportRead?bno=${list.bno}&page=${page}">${list.btitle}</a></td>
+                    <td><a href="/sign/reportRead?bno=${list.bno}&page=${cri.page}&searchType=${cri.searchType}&keyword=${cri.keyword}">${list.btitle}</a></td>
                     <td>${list.mname}</td>
                     <td>${list.bwrite_date}</td>
                     <td>${list.bsigner}</td>
                     <td>${list.bsign_date}</td>
                     <td>
-                    <c:choose>
-                    	<c:when test="${list.signstate == 0}">
-							<c:out value="결재완료" />                   
-                    	</c:when>
-                    	<c:when test="${list.signstate == 1}">
-							<Strong>
-								<a class="text-danger" href="#myModal" data-toggle="modal">
-									<c:out value="결재보류" /><i class="icofont-ui-message text-primary"></i>      
-								</a>
-							</Strong>             
-                    	</c:when>
-                    	<c:when test="${list.signstate == 2}">
-							<Strong class="text-muted"><c:out value="미결재" /></Strong>                   
-                    	</c:when>
-                    </c:choose>
+	                    <c:choose>
+	                    	<c:when test="${list.signstate == 0}">
+								<c:out value="미결재" />                   
+	                    	</c:when>
+	                    	<c:when test="${list.signstate == 1}">
+								<Strong>
+									<a class="text-danger" href="#myModal" data-toggle="modal">
+										<c:out value="결재보류" /><i class="icofont-ui-message text-primary"></i>      
+									</a>
+								</Strong>             
+	                    	</c:when>
+	                    	<c:when test="${list.signstate == 2}">
+								<Strong class="text-muted"><c:out value="결재완료" /></Strong>                   
+	                    	</c:when>
+	                    </c:choose>
                     </td>
                   </tr>
+                  </c:if>
                   </c:forEach>
                 </tbody>
               </table>
@@ -132,7 +154,7 @@
         			var ="idx">
         	<li class="page-item
         		<c:out value="${pageMaker.cri.page == idx ? 'active' : ''}" />">
-        			<a class="page-link" href="/sign/signStateList?page=${idx}">${idx}</a></li>			
+        			<a class="page-link" href="/sign/signStateList?page=${idx}&searchType=${cri.searchType}&keyword=${cri.keyword}">${idx}</a></li>			
         </c:forEach>
           <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
           <li class="page-item">
@@ -150,8 +172,28 @@
         <div class="row">
         	<div class="col-lg-12">
           <header class="panel-heading">
-                <h3>결재완료</h3>
+                <h2>결재완료</h2>
+                <!-- search start -->
+            	
+             		
+             		<div class="box-body">
+             			<select name="searchType">
+             				<option value="n" <c:out value="${cri.searchType == null ? 'selected' : ''}" />>-</option>
+             				<option value="t" <c:out value="${cri.searchType eq 't' ? 'selected' : ''}" />>제목</option>
+             				<option value="c" <c:out value="${cri.searchType eq 'c' ? 'selected' : ''}" />>내용</option>
+             				<option value="w" <c:out value="${cri.searchType eq 'w' ? 'selected' : ''}" />>작성자</option>
+             				<option value="tc" <c:out value="${cri.searchType eq 'tc' ? 'selected' : ''}" />>제목+내용</option>
+             				<option value="cw" <c:out value="${cri.searchType eq 'cw' ? 'selected' : ''}" />>내용+작성자</option>
+             				<option value="tcw" <c:out value="${cri.searchType eq 'tcw' ? 'selected' : ''}" />>제목+내용+작성자</option>
+             			</select>
+             			
+             			<input type="text" name="keyword" id="keywordInput" value="${cri.keyword}">
+             			<button id="searchBtn">Search</button>
+             		</div>
+             	
+             	<!-- search end -->
               </header>
+              
             <section class="panel">
 
               <table class="table table-striped table-advance table-hover">
@@ -167,51 +209,54 @@
                     <th>결재상태</th>
                   </tr>
                    <c:forEach items="${signStateListB}" var="list">
+                   <input type="hidden" name="mno" value="${list.mno}">
+                  <c:if test="${list.mno == login.mno || list.bsigner == login.mname}">
                   <tr>
                     <td>${list.bno}</td>
                     <td>${list.deptname}</td>
-                    <td><a href="/sign/reportRead?bno=${list.bno}">${list.btitle}</a></td>
+                    <td><a href="/sign/reportRead?bno=${list.bno}&page=${cri.page}&searchType=${cri.searchType}&keyword=${cri.keyword}">${list.btitle}</a></td>
                     <td>${list.mname}</td>
                     <td>${list.bwrite_date}</td>
                     <td>${list.bsigner}</td>
                     <td>${list.bsign_date}</td>
                     <td>
                     <c:choose>
-                    	<c:when test="${list.signstate == 0}">
+                    	<c:when test="${list.signstate == 2}">
 							<Strong class="text-primary"><c:out value="결재완료" /></Strong>                   
-                    	</c:when>
+                    	</c:when>	
                     	<c:when test="${list.signstate == 1}">
 							<c:out value="결재보류" />              
                     	</c:when>
-                    	<c:when test="${list.signstate == 2}">
+                    	<c:when test="${list.signstate == 0}">
 							<c:out value="미결재" />                   
                     	</c:when>
                     </c:choose>
                     </td>
                   </tr>
+                  </c:if>
                   </c:forEach>
                 </tbody>
               </table>
             
           <div class="text-center">
         <ul class="pagination justify-content-center" style="text-align : center">
-        <c:if test="${pageMaker.prev}">
+        <c:if test="${pageMaker2.prev}">
           <li class="page-item disabled">
-          	<a class="page-link" href="/sign/signStateList?page=${pageMaker.startPage -1}">
+          	<a class="page-link" href="/sign/signStateList?page=${pageMaker2.startPage -1}">
           		&laquo;
           	</a>
           </li>
         </c:if>
-        <c:forEach begin="${pageMaker.startPage}"
-        			end ="${pageMaker.endPage}"
+        <c:forEach begin="${pageMaker2.startPage}"
+        			end ="${pageMaker2.endPage}"
         			var ="idx">
         	<li class="page-item
-        		<c:out value="${pageMaker.cri.page == idx ? 'active' : ''}" />">
-        			<a class="page-link" href="/sign/signStateList?page=${idx}">${idx}</a></li>			
+        		<c:out value="${pageMaker2.cri.page == idx ? 'active' : ''}" />">
+        			<a class="page-link" href="/sign/signStateList?page=${idx}&searchType=${cri2.searchType}&keyword=${cri2.keyword}">${idx}</a></li>			
         </c:forEach>
-          <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+          <c:if test="${pageMaker2.next && pageMaker2.endPage > 0}">
           <li class="page-item">
-          	<a class="page-link" href="/sign/signStateList?page=${pageMaker.endPage +1}">
+          	<a class="page-link" href="/sign/signStateList?page=${pageMaker2.endPage +1}">
           		&raquo;
           	</a>
           </li>
@@ -357,8 +402,20 @@
           }
         });
       });
+      
+      $('#searchBtn').on("click", function(event){
+    	  
+    	  
+    	  self.location = "signSuccessList"
+    	  		+ "?page=1"
+    	  		+ "&searchType="
+    	  		+ $("select option:selected").val()
+    	  		+ "&keyword=" + $("#keywordInput").val();
+      });
+      
+      console.log(${signerSelect})
     </script>
-
+	
 </body>
 
 </html>

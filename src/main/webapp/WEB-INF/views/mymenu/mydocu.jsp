@@ -91,38 +91,37 @@
                   
                 </tbody>
          </table>
-         <div class="row text-center">
-         <select name="searchType" class="text-center">
-  				<option value="t"
-  				<c:out value="${cri.searchType eq 't' ? 'selected' : '' }" />>	
-  				제목
-  				</option>
-  				<option value="c"
-  				<c:out value="${cri.searchType eq 'c' ? 'selected' : '' }" />>	
-  				본문
-  				</option>
-  			</select>
-  			
-  			<input type="text"
-  					name="keyword"
-  					id="keywordInput"
-  					value="${cri.keyword }">
-  			<button class="btn btn-default" id="searchBtn">검 색</button>
-         </div>
-  			<div class="row text-center">
-                  <ul class="pagination">
-                    <c:if test="${pageMaker.prev}">
-                    	<li><a href="/mymenu/mydocu?page=${pageMaker.startPage - 1}&searchType=${cri.searchType}&keyword=${cri.keyword}">«</a></li>
-                    </c:if>
-                    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="index">
-                    	<li class="<c:out value="${pageMaker.cri.page == index ? 'active' : '' }" />" >
-                    		<a href="/mymenu/mydocu?page=${index}&searchType=${cri.searchType}&keyword=${cri.keyword}">${index}</a></li>
-                    </c:forEach>
-                    <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                    	<li><a href="/mymenu/mydocu?page=${pageMaker.endPage + 1}&searchType=${cri.searchType}&keyword=${cri.keyword}">»</a></li>
-                    </c:if>
+         <div class="container mt-3">
+              	<div class="row text-center">
+              	<br>
+              		<div class="btn-group" data-toggle="buttons">
+<%-- 					<label class="btn btn-default <c:out value="${cri.searchType eq 'n' ? 'active' : '' }"/>"> --%>
+<!--                                           <input type="radio" name="searchType" id="option1" value="n"  -->
+<%--                                           <c:out value="${cri.searchType eq 'n' ? 'checked' : '' }"/>> 선택 --%>
+<!--                                       </label> -->
+                    <label class="btn btn-default">
+                                          <input type="radio" name="searchType" id="option1" value="f" >분류
+                                      </label>
+                    <label class="btn btn-default">
+                                          <input type="radio" name="searchType" id="option2" value="t" >제목
+                                      </label>
+                  </div>
+              		
+                  <div class="row">
+                  	<br>
+					
+              			<input type="text" name="keyword" id="keywordInput" placeholder="Search">
+              			
+              			<button class="btn btn-default btn-lg" id="searchBtn"><i class="icofont-search-2"></i></button>
+                  </div>
+ 						
+              		</div>
+              	</div>
+              <div class="text-center">
+                  <ul id="basic" class="pagination">
                   </ul>
-  			</div>
+                  <ul id="search" class="pagination"></ul>
+                </div>
 	</section>
             
           </div>
@@ -192,15 +191,21 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	function getdocuList(){
-		
 	var mno = ${login.mno};
 	var bno = "${board.bno}";
-		$.getJSON("/mymenu/docu/" + mno, function(data) {
+	
+	var temppage = "";
+	var tempsearchType = "";
+	var tempkeyword = "";
+	
+	function getdocuList(page){
+		
+		$.getJSON("/mymenu/docu/" + mno + "/" + page, function(data) {
+			
 			
 			var str="";
 			
-			$(data).each(function() {
+			$(data.list).each(function() {
 				
 				var timestamp1 = this.bwrite_date;
     			var date1 = new Date(timestamp1);
@@ -215,11 +220,11 @@ $(document).ready(function() {
     				
     			}
     			
-    			if (this.signstate == 2) {
+    			if (this.signstate == 0) {
     				this.signstate = "미결재";
     			} else if (this.signstate == 1){
     				this.signstate = "결재보류"
-    			} else if(this.signstate == 0){
+    			} else if(this.signstate == 2){
     				this.signstate = "결재완료"
     			}
     			
@@ -229,29 +234,144 @@ $(document).ready(function() {
 				+ "</tr>";
 			});
 			$("#boardbody").html(str);
+			printPaging(data.pageMaker);
+		}); // getJson
+	} // docuList
+	getdocuList(1);
+	
+	function printPaging(pageMaker) {
+		var str = "";
+		
+		if(pageMaker.prev) {
+			str += "<li><a class='page-link' href='" + (pageMaker.startPage - 1) + "'> << </a></li>";
+		}
+		
+		for (var i = pageMaker.startPage, len = pageMaker.endPage; i <= len; i++) {
+			var active = pageMaker.cri.page == i ? 'active' : '';
+			str += "<li class='" + active + "'><a href='" + i +"'>" + i + "</a></li>";
+		}
+		if(pageMaker.next) {
+			str += "<li><a href='" + (pageMaker.endPage + 1) + "'> >> </a></li>";
+		}
+		$("#basic").html(str);
+	}
+	
+	$("#basic").on("click", "li a", function(e) {
+		e.preventDefault();
+		
+		formPage = $(this).attr("href");
+		
+		getdocuList(formPage);
+	});
+	
+	function getdocuListSearch(page, searchType, keyword){
+		
+		$.getJSON("/mymenu/docu/" + mno + "/" + page + "/" + searchType + "/" + keyword, function(data) {
+			
+			var str="";
+			temppage = data.pageMaker.cri.page;
+			tempsearchType = searchType;
+			tempkeyword = keyword;
+			
+			$(data.list).each(function() {
+				
+				var timestamp1 = this.bwrite_date;
+    			var date1 = new Date(timestamp1);
+    			var formattedTime1 = date1.getFullYear() + "-" + ("0" + (date1.getMonth() + 1)).slice(-2) + "-" + ("0" + date1.getDate()).slice(-2);
+				
+    			var formattedTime2 = "";
+    			
+    			if (this.bsign_date != null) {
+	    			var timestamp2 = this.bsign_date;
+	    			var date2 = new Date(timestamp2);
+	    			formattedTime2 = date2.getFullYear() + "-" + ("0" + (date2.getMonth() + 1)).slice(-2) + "-" + ("0" + date2.getDate()).slice(-2);
+    				
+    			}
+    			
+    			if (this.signstate == 0) {
+    				this.signstate = "미결재";
+    			} else if (this.signstate == 1){
+    				this.signstate = "결재보류"
+    			} else if(this.signstate == 2){
+    				this.signstate = "결재완료"
+    			} else {
+    				this.signstate = "";
+    			}
+    			
+    			str += "<tr data-bno='" + this.bno + "' class='text-center mybno' data-btitle='" + this.btitle + "'>"
+				+ "<td>" + this.bno + "</td><td class='fname'>" + this.fname + "</td><td><a href='/mymenu/mydocuread?bno="+this.bno+"'>" + this.btitle + "</a></td><td>" + formattedTime1 + "</td><td>"
+				+ this.signstate + "</td><td>" + formattedTime2 + "</td>"
+				+ "</tr>";
+			});
+			$("#boardbody").html(str);
+			printPagingSearch(data.pageMaker, searchType, keyword);
 		}); // getJson
 	
 	} // docuList
-	getdocuList();
+	
+	function printPagingSearch(pageMaker, searchType, keyword) {
+		var str = "";
+		
+		if(pageMaker.prev) {
+			str += "<li><a class='page-link' href='" + (pageMaker.startPage - 1) + "'> << </a></li>";
+		}
+		
+		for (var i = pageMaker.startPage, len = pageMaker.endPage; i <= len; i++) {
+			var active = pageMaker.cri.page == i ? 'active' : '';
+			str += "<li class='" + active + "'><a href='" + i + "'>" + i + "</a></li>";
+		}
+		if(pageMaker.next) {
+			str += "<li><a href='" + (pageMaker.endPage + 1) + "'> >> </a></li>";
+		}
+		
+		$('#search').html(str);
+	}
+	
+	$("#search").on("click", "li a", function(e) {
+		e.preventDefault();
+		
+		formPage = $(this).attr("href");
+		keyword = $("#keywordInput").val();
+		searchType = $("input[name='searchType']:checked").val();
+		getdocuListSearch(formPage, searchType, keyword);
+	});
+	
+	$("#searchBtn").on("click", function() {
+		var keyword = $("#keywordInput").val();
+		var searchType = $("input[name='searchType']:checked").val();
+		
+		 if(keyword == "" || searchType == "undefined") {
+			 	getdocuList(1);
+				$("#search").html("");
+			 } else {
+				console.log("====================");
+				getdocuListSearch(1, searchType, keyword);
+				console.log("====================");
+				
+				$("#basic").html("");
+			 } 
+	});
+	
+	
 });// document
 </script>
 <script type="text/javascript">
 $(document).ready(function(){
 	
-	var bno = "${board.bno}";;
+// 	var bno = "${board.bno}";;
 	
-	console.log(bno);
-	if(bno !== ''){
-		alert(bno + "번 글이 삭제되었습니다.");
-	}
+// 	console.log(bno);
+// 	if(bno !== ''){
+// 		alert(bno + "번 글이 삭제되었습니다.");
+// 	}
 	
-	$('#searchBtn').on("click", function(event){
-		self.location = "mydocu"
-			+ "?page=1"
-			+ "&searchType="
-			+ $("select option:selected").val()
-			+ "&keyword=" + $("#keywordInput").val();
-	});
+// 	$('#searchBtn').on("click", function(event){
+// 		self.location = "mydocu"
+// 			+ "?page=1"
+// 			+ "&searchType="
+// 			+ $("select option:selected").val()
+// 			+ "&keyword=" + $("#keywordInput").val();
+// 	});
 });
 </script>
 </body>

@@ -1,6 +1,7 @@
 package org.ict.controller;
 
 import org.ict.domain.BoardVO;
+import org.ict.domain.Criteria;
 import org.ict.domain.PageMaker;
 import org.ict.domain.SearchCriteria;
 import org.ict.service.MydocuService;
@@ -20,15 +21,10 @@ public class MydocuController {
 	private MydocuService service;
 
 	@RequestMapping("/mydocu")
-	public String mydocu(Model model, SearchCriteria cri) {
+	public String mydocu() {
 
-		model.addAttribute("mydocu", service.getListPage(cri));
-		model.addAttribute("cri", cri);
-
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(service.getCountPage(cri));
-		model.addAttribute("pageMaker", pageMaker);
+	
+		
 
 		return "/mymenu/mydocu";
 	}

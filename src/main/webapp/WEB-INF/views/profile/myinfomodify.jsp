@@ -10,7 +10,7 @@
   <link rel="shortcut icon" href="/resources/img/favicon.png">
 
   <title>SIGN ME</title>
-
+  <link rel="icon" type="image/png"  href="/resources/img/signmefavicon.png"/>
   <link rel="stylesheet" href="/resources/icofont/icofont.min.css">
   <!-- Bootstrap CSS -->
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -58,7 +58,7 @@
             <h3 class="page-header"><strong><i class="icofont-ui-rotation"></i>내 정보 수정</strong></h3>
             <ol class="breadcrumb">
               <li><i class="fa fa-home"></i><a href="/">메인</a></li>
-              <li><i class="icofont-id"></i><a href="/profile/myinfo"></a>내 정보</li>
+              <li><i class="icofont-user"></i><a href="/profile/myinfo"></a>내 정보</li>
               <li><i class="icofont-ui-rotation"></i>내 정보 수정</li>
             </ol>
           </div>
@@ -80,71 +80,71 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="mpwd" class="control-label col-lg-1">비밀번호<span class="required">*</span></label>
+                      <label for="mpwd" class="control-label col-lg-1">비밀번호</label>
                       <div class="col-lg-3">
-                        <input class=" form-control" id="mpwd" name="mpwd" type="password" />
+                        <input class=" form-control" id="mpwd" name="mpwd" type="password" required />
                       </div>
-                      <label for="repwd" class="control-label col-lg-2 col-lg-offset-1">비밀번호 확인 <span class="required">*</span></label>
+                      <label for="repwd" class="control-label col-lg-2 col-lg-offset-1">비밀번호 확인</label>
                       <div class="col-lg-3">
-                        <input class=" form-control" id="repwd" type="password" />
+                        <input class=" form-control" id="repwd" type="password" required/>
                       </div>  
                     </div>
                     <div class="form-group">
-                      <label for="memail" class="control-label col-lg-1">이메일 <span class="required">*</span></label>
+                      <label for="memail" class="control-label col-lg-1">이메일</label>
                       <div class="col-lg-6">
-                        <input class="form-control" id="memail" name="memail" type="text"/>
+                        <input class="form-control" id="memail" name="memail" type="text" required/>
                       </div>
                     </div>
                     <div class="form-group ">
-                      <label for="hiredate" class="control-label col-lg-1">입사일 <span class="required"></span></label>
+                      <label for="hiredate" class="control-label col-lg-1">입사일</label>
                       <div class="col-lg-6">
                         <input class="form-control" id="hiredate" name="hiredate" type="date" value="${login.hiredate}" readonly />
                       </div>
                     </div>
                     <div class="form-group ">
-                      <label for="deptname" class="control-label col-lg-1">부서 <span class="required"></span></label>
+                      <label for="deptname" class="control-label col-lg-1">부서</label>
                       <div class="col-lg-2">
                         <input class="form-control" id="deptname" name="deptname" type="text" value="${login.deptname}" readonly/>
                       </div>
-                      <label for="position" class="control-label col-lg-1 col-lg-offset-1">직위 <span class="required"></span></label>
+                      <label for="position" class="control-label col-lg-1 col-lg-offset-1">직위</label>
                       <div class="col-lg-2">
                         <input class="form-control" id="position" name="position" type="text" value="${login.position}" readonly/>
                       </div>
                     </div>
                     <div class="form-group ">
-                      <label for="mpnum" class="control-label col-lg-1">연락처 <span class="required">*</span></label>
+                      <label for="mpnum" class="control-label col-lg-1">연락처</label>
                       <div class="col-lg-6">
-                        <input class="form-control" id="mpnum" name="mpnum" type="text" />
+                        <input class="form-control" id="mpnum" name="mpnum" type="text" required/>
                       </div>
                     </div>
                     <div class="form-group ">
-                      <label for="maddress" class="control-label col-lg-1">주소 <span class="required">*</span></label>
+                      <label for="maddress" class="control-label col-lg-1">주소</label>
                       <div class="col-lg-6">
-                        <input class="form-control" id="maddress" name="maddress" type="text" />
+                        <input class="form-control" id="maddress" name="maddress" type="text" required/>
                       </div>
                     </div>
                     <div class="form-group ">
-                      <label for="mbirth" class="control-label col-lg-1">생년월일 <span class="required"></span></label>
+                      <label for="mbirth" class="control-label col-lg-1">생년월일</label>
                       <div class="col-lg-6">
                         <input class="form-control" id="mbirth" name="mbirth" type="date" value="${login.mbirth}" readonly />
                       </div>
                     </div>
                     <div class="form-group ">
-                      <label for="gender" class="control-label col-lg-1">성별<span class="required"></span></label>
+                      <label for="gender" class="control-label col-lg-1">성별</label>
                       <div class="col-lg-2">
                         <select class="form-control" id="gender" name="gender">
                           <option value="1">남자</option>
                           <option value="2">여자</option>
                         </select>
                       </div>
-                      <label for="military" class="control-label col-lg-1 col-lg-offset-1">병역여부<span class="required"></span></label>
+                      <label for="military" class="control-label col-lg-1 col-lg-offset-1">병역여부</label>
                       <div class="col-lg-2">
                         <select class="form-control" id="military" name="military">
                           <option value="1">군필</option>
                           <option value="2">미필</option>
                         </select>
                       </div>
-                      <label for="marry" class="control-label col-lg-1 col-lg-offset-1">혼인여부<span class="required"></span></label>
+                      <label for="marry" class="control-label col-lg-1 col-lg-offset-1">혼인여부</label>
                       <div class="col-lg-2">
                         <select class="form-control" id="marry" name="marry">
                           <option value="1">기혼</option>
@@ -153,14 +153,14 @@
                       </div>
                     </div>
                     <div class="form-group ">
-                      <label for="vacachk" class="control-label col-lg-1">휴가여부<span class="required"></span></label>
+                      <label for="vacachk" class="control-label col-lg-1">휴가여부</label>
                       <div class="col-lg-2">
                         <select class="form-control" id="vacachk" name="vacachk">
                           <option value="1">근무중</option>
                           <option value="2">휴가중</option>
                         </select>
                       </div>
-                      <label for="vacarem" class="control-label col-lg-1 col-lg-offset-1">휴가일수<span class="required">*</span></label>
+                      <label for="vacarem" class="control-label col-lg-1 col-lg-offset-1">휴가일수</label>
                       <div class="col-lg-2">
                         <input class="form-control" id="vacarem" name="vacarem" type="text" value="${login.vacarem}" readonly/>
                       </div>
@@ -313,6 +313,9 @@ var mno = ${login.mno};
     	$("#modifybtn").on("click", function(e) {
 			e.preventDefault();
 			
+			
+			
+			
 			var mpwd = $("#mpwd").val();
 			var memail = $("#memail").val();
 			var mpnum = $("#mpnum").val();
@@ -321,6 +324,12 @@ var mno = ${login.mno};
 			var military = $("#military").val();
 			var marry = $("#marry").val();
 			var vacachk = $("#vacachk").val();
+			
+			if (mpwd != $("#repwd").val()){
+				alert("비밀번호가 일치하지 않습니다!");
+				$("#repwd").focus();
+				return;
+			}
 			
 			console.log(mpwd);
 			console.log(memail);

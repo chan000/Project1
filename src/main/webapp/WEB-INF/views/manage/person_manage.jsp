@@ -10,7 +10,7 @@
   <link rel="shortcut icon" href="/resources/img/favicon.png">
 
   <title>SIGN ME</title>
-
+  <link rel="icon" type="image/png"  href="/resources/img/signmefavicon.png"/>
   <link rel="stylesheet" href="/resources/icofont/icofont.min.css">
   <!-- Bootstrap CSS -->
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -175,9 +175,9 @@
                   <div class="row">
                   	<br>
 
-              			<input type="text" name="keyword" id="keywordInput" value="${cri.keyword}">
+              			<input type="text" name="keyword" id="keywordInput" value="${cri.keyword}" placeholder="Search">
               			
-              			<button class="btn btn-default" id="searchBtn">검 색</button>
+              			<button class="btn btn-default btn-lg" id="searchBtn"><i class="icofont-search-user"></i></button>
                   </div>
  						
               		</div>

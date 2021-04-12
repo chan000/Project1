@@ -3,6 +3,7 @@ package org.ict.service;
 import java.util.List;
 
 import org.ict.domain.BoardVO;
+import org.ict.domain.Criteria;
 import org.ict.domain.SearchCriteria;
 import org.ict.mapper.MydocuMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,13 +36,23 @@ public class MydocuServiceImpl implements MydocuService {
 	}
 
 	@Override
-	public List<BoardVO> getListPage(SearchCriteria cri) {
-		return mapper.listPage(cri);
+	public List<BoardVO> getListPage(Integer mno, Criteria cri) {
+		return mapper.docuListPage(mno, cri);
 	}
 
 	@Override
-	public int getCountPage(SearchCriteria cri) {
-		return mapper.countPageNum(cri);
+	public int getCountPage(Integer mno) {
+		return mapper.countPageNum(mno);
+	}
+
+	@Override
+	public List<BoardVO> getListPageSearch(Integer mno, Criteria cri, SearchCriteria search) {
+		return mapper.docuListPageSearch(mno, cri, search);
+	}
+
+	@Override
+	public int getCountPageSearch(Integer mno, SearchCriteria search) {
+		return mapper.countPageNumSearch(mno, search);
 	}
 
 
